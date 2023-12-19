@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="easy.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Quiz</title>
+</head>
+<body>
+
+    <div class="navbar">
+        <a class="logo" href="#">Cybersecure</a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="getstarted.html">Get Started</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+<br>
+<br>
+
+<h1>Level 1 Basic Quiz</h1> 
+
+<div id="quiz-container">
+    <!-- Placeholder for the question content -->
+    <div class="question" id="current-question">
+        <!-- Question content will be loaded here dynamically -->
+    </div>
+
+    <!-- "Submit" and "Next Question" buttons -->
+    <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
+    <button onclick="loadNextQuestion()">Next Question</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+var currentQuestionNumber = 1;
+var correctAnswers = 0;
+var isQuestionSubmitted = false;
+
+function loadNextQuestion() {
+    var currentQuestionElement = document.getElementById("current-question");
+    var questionContent = getQuestionContent(currentQuestionNumber);
+
+    // Check if the user has submitted the current question before moving to the next one
+    if (!isQuestionSubmitted && currentQuestionNumber > 1) {
+        alert("Please submit your answer before moving to the next question.");
+        return;
+    }
+
+    // Reset the submission flag for the next question
+    isQuestionSubmitted = false;
+
+    if (questionContent) {
+        currentQuestionElement.innerHTML = questionContent;
+        currentQuestionNumber++;
+
+        // Show the "Submit" button for the new question
+        document.querySelector(".submit-btn").style.display = "block";
+    } else {
+        // No more questions, display quiz completion message or redirect to results page
+        currentQuestionElement.innerHTML = "Quiz completed!";
+        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
+        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
+        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
+    }
+
+    // Clear previous result
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("result").className = "";
+}
+
+function submitAnswer() {
+    var currentQuestionNumber = getCurrentQuestionNumber();
+    var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
+
+    if (userAnswer === "") {
+        alert("Please enter your answer before submitting.");
+        return;
+    }
+
+    // Set the flag to indicate that the current question has been submitted
+    isQuestionSubmitted = true;
+
+    checkAnswer(currentQuestionNumber);
+
+    // Hide the "Submit" button after submitting the answer
+    document.querySelector(".submit-btn").style.display = "none";
+}
+
+function getCurrentQuestionNumber() {
+    return currentQuestionNumber - 1;
+}
+
+function displayResults() {
+    var totalQuestions = currentQuestionNumber - 1;
+    var feedback = "";
+
+    if (correctAnswers === totalQuestions) {
+        feedback = "Congratulations! You answered all questions correctly.";
+    } else if (correctAnswers >= totalQuestions / 2) {
+        feedback = "Good job! You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    } else {
+        feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    }
+
+    document.getElementById("result").innerHTML = feedback;
+    document.getElementById("result").className = "quiz-completed";
+}
+
+function checkAnswer(questionNumber) {
+    var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+    var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+    var resultElement = document.getElementById("result");
+    var explanation = getExplanation(questionNumber);
+
+    if (userAnswer === correctAnswer) {
+        resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+        resultElement.className = "correct";
+        correctAnswers++;
+    } else {
+        resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+        resultElement.className = "incorrect";
+    }
+}
+
+    function getQuestionContent(questionNumber) {
+        switch (questionNumber) {
+            case 1:
+                return `
+                    <strong> ${questionNumber}: What should you be cautious of when using public Wi-Fi?</strong> 
+                    <ul>
+                        <li>A. The speed of the connection</li>
+                        <li>B. The availability of free games</li>
+                        <li>C. Potential security risks and data interception</li>
+                        <li>D. The number of people connected to the network</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 2:
+                return `
+                    <strong> ${questionNumber} :You receive an email claiming you've won a prize but requests personal information for processing. How do you determine if it's legitimate or a phishing attempt? </strong> 
+                    <ul>
+                        <li>A.Verify the sender's email address, check for spelling errors, and contact the organization directly to confirm.</li>
+                        <li>B. Ignore the email; it's likely just spam.</li>
+                        <li>C. Click the provided link to claim your prize immediately.</li>
+                        <li>D. Share your personal information as requested to expedite the prize claim.</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 3:
+                return `
+                    <strong> ${questionNumber}: What should you do if you receive a message from someone you don't know online? </strong>
+                    <ul>
+                        <li>A. Share personal information</li>
+                        <li>B. Reply immediately</li>
+                        <li>C. Ignore or block the person</li>
+                        <li>D. Meet them in person</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 4:
+                return `
+                    <strong> ${questionNumber}: Which of the following is a type of personal information? </strong>
+                    <ul>
+                        <li>A. Favorite color</li>
+                        <li>B. Breakfast recipes</li>
+                        <li>C. School subjects</li>
+                        <li>D. Home address</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 5:
+                return `
+                    <strong> ${questionNumber}:Which of the following is a strong password practice? </strong>
+                    <ul>
+                        <li>A. Using your name and birthdate</li>
+                        <li>B. Creating a password with a mix of letters, numbers, and symbols</li>
+                        <li>C. Using the same password for multiple accounts</li>
+                        <li>D. Keeping your password written on a sticky note on your computer</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 6:
+                return `
+                    <strong> ${questionNumber}: What should you do if a pop-up appears on a website you don’t know? </strong>
+                    <ul>
+                        <li>A. Click on it</li>
+                        <li>B. Close it without clicking</li>
+                        <li>C. Share it on social media</li>
+                        <li>D. Call the number provided</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 7:
+                return `
+                    <strong> ${questionNumber} Which of the following is a safe and secure website URL? </strong>
+                    <ul>
+                        <li>A. http://www.example.com</li>
+                        <li>B. https://www.example.com</li>
+                        <li>C. www.example.com</li>
+                        <li>D. example.com</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 8:
+                return `
+                    <strong> ${questionNumber}: You receive a friend request on social media from someone you don't know. What is a safe and responsible action to take? </strong>
+                    <ul>
+                        <li>A. Accept the friend request; more friends mean a larger social circle.</li>
+                        <li>B.Decline the friend request without any further investigation.</li>
+                        <li>C. Check the person's profile, mutual connections, and shared interests before deciding to accept or decline.</li>
+                        <li>D. Share personal information on your profile to establish trust with the new connection.</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 9:
+                return `
+                    <strong> ${questionNumber}: What is the purpose of a Virtual Private Network (VPN) in the context of online safety? </strong>
+                    <ul>
+                        <li>A. Accelerating internet speed</li>
+                        <li>B. Encrypting internet connection for privacy</li>
+                        <li>C. Blocking access to websites</li>
+                        <li>D. Enhancing social media interactions</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+            case 10:
+                return `
+                    <strong> ${questionNumber}: Why is it important not to share passwords with others? </strong>
+                    <ul>
+                        <li>A. To make your friends curious</li>
+                        <li>B. To protect your personal information</li>
+                        <li>C. To have fewer friends</li>
+                        <li>D. To create a mystery</li>
+                    </ul>
+                    <input type="text" id="answer${questionNumber}">
+                `;
+
+                
+// Question 11
+case 11:
+    return `
+        <strong>11: What should you do if a website asks for your social security number to access free content?</strong>
+        <ul>
+            <li>A. Provide it without hesitation</li>
+            <li>B. Report the website</li>
+            <li>C. Share it on social media</li>
+            <li>D. Ask friends for advice</li>
+        </ul>
+        <input type="text" id="answer11">
+    `;
+
+// Question 12
+case 12:
+    return `
+        <strong>12: Which of the following is a strong password?</strong>
+        <ul>
+            <li>A. Your pet's name</li>
+            <li>B. 123456</li>
+            <li>C. aBcD!23$</li>
+            <li>D. Password123</li>
+        </ul>
+        <input type="text" id="answer12">
+    `;
+
+// Question 13
+case 13:
+    return `
+        <strong>13: What does "phishing" refer to in the context of the internet?</strong>
+        <ul>
+            <li>A. A way to catch fish online</li>
+            <li>B. Sending deceptive emails to obtain personal information</li>
+            <li>C. Playing online games</li>
+            <li>D. A new social media trend</li>
+        </ul>
+        <input type="text" id="answer13">
+    `;
+
+// Question 14
+case 14:
+    return `
+        <strong>14: Why is it important to log out of your accounts when using a shared computer?</strong>
+        <ul>
+            <li>A. To let others use your accounts</li>
+            <li>B. To save time for the next user</li>
+            <li>C. To protect your account from unauthorized access</li>
+            <li>D. To show your username to everyone</li>
+        </ul>
+        <input type="text" id="answer14">
+    `;
+
+// Question 15
+case 15:
+    return `
+        <strong>15: What should you do if you accidentally click on a suspicious link?</strong>
+        <ul>
+            <li>A. Share the link with friends</li>
+            <li>B. Click on more links to investigate</li>
+            <li>C. Run a virus scan on your computer</li>
+            <li>D. Ignore it and continue browsing</li>
+        </ul>
+        <input type="text" id="answer15">
+    `;
+
+// Question 16
+case 16:
+    return `
+        <strong>16: Which of the following is a safe way to update your software?</strong>
+        <ul>
+            <li>A. Click on random pop-up ads</li>
+            <li>B. Ignore update notifications</li>
+            <li>C. Download updates from official sources</li>
+            <li>D. Share update links on social media</li>
+        </ul>
+        <input type="text" id="answer16">
+    `;
+
+// Question 17
+case 17:
+    return `
+        <strong>17: What is two-factor authentication (2FA) used for?</strong>
+        <ul>
+            <li>A. Posting on social media</li>
+            <li>B. Accessing accounts securely</li>
+            <li>C. Creating strong passwords</li>
+            <li>D. Blocking unwanted emails</li>
+        </ul>
+        <input type="text" id="answer17">
+    `;
+
+// Question 18
+case 18:
+    return `
+        <strong>18: Why is it important to be cautious when sharing location information online?</strong>
+        <ul>
+            <li>A. To show off your favorite places</li>
+            <li>B. To make new friends</li>
+            <li>C. To protect your privacy and safety</li>
+            <li>D. To help with navigation</li>
+        </ul>
+        <input type="text" id="answer18">
+    `;
+
+// Question 19
+case 19:
+    return `
+        <strong>19: What does "cyberbullying" involve?</strong>
+        <ul>
+            <li>A. Sharing cat videos online</li>
+            <li>B. Sending kind messages to friends</li>
+            <li>C. Using the internet to harass or intimidate others</li>
+            <li>D. Creating online events</li>
+        </ul>
+        <input type="text" id="answer19">
+    `;
+
+// Question 20
+case 20:
+    return `
+        <strong>20: What is the purpose of a firewall on a computer?</strong>
+        <ul>
+            <li>A. To keep the computer warm</li>
+            <li>B. To block unauthorized access and protect against security threats</li>
+            <li>C. To display ads</li>
+            <li>D. To enhance internet speed</li>
+        </ul>
+        <input type="text" id="answer20">
+    `;
+
+case 21:
+    return `
+        <strong>21: What is the main purpose of an email address in online communication?</strong>
+        <ul>
+            <li>A. To order pizza</li>
+            <li>B. To identify your favorite color</li>
+            <li>C. To access secure websites</li>
+            <li>D. To send and receive electronic messages</li>
+        </ul>
+        <input type="text" id="answer21">
+    `;
+
+// Question 2
+case 22:
+    return `
+        <strong>22: What does the term "phishing" refer to in the context of internet security?</strong>
+        <ul>
+            <li>A. A way to catch fish online</li>
+            <li>B. Sending deceptive emails to obtain personal information</li>
+            <li>C. A popular online game</li>
+            <li>D. A new social media trend</li>
+        </ul>
+        <input type="text" id="answer22">
+    `;
+
+// Question 3
+case 23:
+    return `
+        <strong>23: Why is it important to keep your software and operating system up-to-date?</strong>
+        <ul>
+            <li>A. To make your computer look modern</li>
+            <li>B. To impress your friends</li>
+            <li>C. To enhance internet speed</li>
+            <li>D. To protect against security vulnerabilities</li>
+        </ul>
+        <input type="text" id="answer23">
+    `;
+
+// Question 4
+case 24:
+    return `
+        <strong>24: What is the purpose of the "delete cookies" option in a web browser?</strong>
+        <ul>
+            <li>A. To remove chocolate chip cookies from your computer</li>
+            <li>B. To clear browsing history</li>
+            <li>C. To refresh the webpage</li>
+            <li>D. To improve internet speed</li>
+        </ul>
+        <input type="text" id="answer24">
+    `;
+
+// Question 5
+case 25:
+    return `
+        <strong>25: How can you verify if a website is secure before entering personal information?</strong>
+        <ul>
+            <li>A. Check the weather forecast</li>
+            <li>B. Look for the padlock symbol in the address bar</li>
+            <li>C. Count the number of ads on the page</li>
+            <li>D. Share the website on social media</li>
+        </ul>
+        <input type="text" id="answer25">
+    `;
+
+// Question 6
+case 26:
+    return `
+        <strong>26: What is the primary purpose of a web browser?</strong>
+        <ul>
+            <li>A. To bake cookies</li>
+            <li>B. To make phone calls</li>
+            <li>C. To display websites and web pages</li>
+            <li>D. To play video games</li>
+        </ul>
+        <input type="text" id="answer26">
+    `;
+
+// Question 7
+case 27:
+    return `
+        <strong>27: Why is it essential to create backups of important files on your computer?</strong>
+        <ul>
+            <li>A. To save space on your hard drive</li>
+            <li>B. To impress your computer-savvy friends</li>
+            <li>C. To restore lost files in case of data loss</li>
+            <li>D. To share files with others</li>
+        </ul>
+        <input type="text" id="answer27">
+    `;
+
+// Question 8
+case 28:
+    return `
+        <strong>28: What is the purpose of a CAPTCHA on websites?</strong>
+        <ul>
+            <li>A. To make websites more colorful</li>
+            <li>B. To verify that users are human and not automated programs</li>
+            <li>C. To play online games</li>
+            <li>D. To increase website loading speed</li>
+        </ul>
+        <input type="text" id="answer28">
+    `;
+
+// Question 9
+case 29:
+    return `
+        <strong>29: What is the role of an IP address in computer networking?</strong>
+        <ul>
+            <li>A. To order pizza online</li>
+            <li>B. To identify a device on a network</li>
+            <li>C. To design websites</li>
+            <li>D. To compose emails</li>
+        </ul>
+        <input type="text" id="answer29">
+    `;
+
+// Question 10
+case 30:
+    return `
+        <strong>30: What does the term "URL" stand for in the context of web addresses?</strong>
+        <ul>
+            <li>A. Uniform Resource Locator</li>
+            <li>B. Universal Recipe List</li>
+            <li>C. User Registration Link</li>
+            <li>D. Underwater Robotics Laboratory</li>
+        </ul>
+        <input type="text" id="answer30">
+    `;
+
+// Question 11
+case 31:
+    return `
+        <strong>31: What is the significance of a website URL starting with "https"?</strong>
+        <ul>
+            <li>A. It indicates a personal blog</li>
+            <li>B. It denotes a government website</li>
+            <li>C. It signifies a secure connection</li>
+            <li>D. It means a non-functional link</li>
+        </ul>
+        <input type="text" id="answer31">
+    `;
+
+// Question 12
+case 32:
+    return `
+        <strong>32: What should you do if a pop-up appears on a website you don’t know?</strong>
+        <ul>
+            <li>A. Click on it</li>
+            <li>B. Close it without clicking</li>
+            <li>C. Share it on social media</li>
+            <li>D. Call the number provided</li>
+        </ul>
+        <input type="text" id="answer32">
+    `;
+
+// Question 13
+case 33:
+    return `
+        <strong>33: What is the purpose of a "download" button on a website?</strong>
+        <ul>
+            <li>A. To upload a file</li>
+            <li>B. To save a file to your device</li>
+            <li>C. To print a document</li>
+            <li>D. To share a link</li>
+        </ul>
+        <input type="text" id="answer33">
+    `;
+
+// Question 14
+case 34:
+    return `
+        <strong>34: What is the significance of a website URL starting with "http"?</strong>
+        <ul>
+            <li>A. It indicates a secure connection</li>
+            <li>B. It denotes a unsecure connection</li>
+            <li>C. It signifies a government website</li>
+            <li>D. It means a non-functional link</li>
+        </ul>
+        <input type="text" id="answer34">
+    `;
+
+// Question 15
+case 35:
+    return `
+        <strong>35: What is the primary purpose of a firewall in computer security?</strong>
+        <ul>
+            <li>A. To keep a computer warm</li>
+            <li>B. To play virtual fire animations</li>
+            <li>C. To block unauthorized access and protect against security threats</li>
+            <li>D. To enhance internet speed</li>
+        </ul>
+        <input type="text" id="answer35">
+    `;
+
+// Question 16
+case 36:
+    return `
+        <strong>36: Why is it important to be cautious when sharing location information online?</strong>
+        <ul>
+            <li>A. To show off your favorite places</li>
+            <li>B. To make new friends</li>
+            <li>C. To protect your privacy and safety</li>
+            <li>D. To help with navigation</li>
+        </ul>
+        <input type="text" id="answer36">
+    `;
+
+// Question 17
+case 37:
+    return `
+        <strong>37: What does the term "cyberbullying" involve?</strong>
+        <ul>
+            <li>A. Sharing cat videos online</li>
+            <li>B. Sending kind messages to friends</li>
+            <li>C. Using the internet to harass or intimidate others</li>
+            <li>D. Creating online events</li>
+        </ul>
+        <input type="text" id="answer37">
+    `;
+
+// Question 18
+case 38:
+    return `
+        <strong>38: What is the purpose of a "strong password" in online security?</strong>
+        <ul>
+            <li>A. To make your friends curious</li>
+            <li>B. To protect your personal information</li>
+            <li>C. To have fewer friends</li>
+            <li>D. To create a mystery</li>
+        </ul>
+        <input type="text" id="answer38">
+    `;
+
+// Question 19
+case 39:
+    return `
+        <strong>39: What should you do if you accidentally click on a suspicious link?</strong>
+        <ul>
+            <li>A. Share the link with friends</li>
+            <li>B. Click on more links to investigate</li>
+            <li>C. Run a virus scan on your computer</li>
+            <li>D. Ignore it and continue browsing</li>
+        </ul>
+        <input type="text" id="answer39">
+    `;
+
+// Question 20
+case 40:
+    return `
+        <strong>40: What is two-factor authentication (2FA) used for?</strong>
+        <ul>
+            <li>A. Posting on social media</li>
+            <li>B. Accessing accounts securely</li>
+            <li>C. Creating strong passwords</li>
+            <li>D. Blocking unwanted emails</li>
+        </ul>
+        <input type="text" id="answer40">
+    `;
+
+
+            default:
+                return null; // Return null when there are no more questions
+        }
+    }
+
+    function checkAnswer(questionNumber) {
+        var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+        var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+        var resultElement = document.getElementById("result");
+        var explanation = getExplanation(questionNumber);
+
+        if (userAnswer === correctAnswer) {
+            resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+            resultElement.className = "correct";
+        } else {
+            resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+            resultElement.className = "incorrect";
+        }
+      
+    }
+    
+
+    function getCorrectAnswer(questionNumber) {
+        switch (questionNumber) {
+            case 1:
+                return "C";
+            case 2:
+                return "A";
+            case 3:
+                return "C";
+            case 4:
+                return "D";
+            case 5:
+                return "B";
+            case 6:
+                return "B";
+            case 7:
+                return "B";
+            case 8:
+                return "C";
+            case 9:
+                return "B";
+            case 10:
+                return "B";
+            case 11:
+                return "B";
+            case 12:
+                return "C";
+            case 13:
+                return "B";
+            case 14:
+                return "C";
+            case 15:
+                return "C";
+            case 16:
+                return "C";
+            case 17:
+                return "B";
+            case 18:
+                return "C";
+            case 19:
+                return "C";
+            case 20:
+                return "B";
+            case 21:
+                return "D";
+            case 22:
+                return "B";
+            case 23:
+                return "D";
+            case 24:
+                return "B";
+            case 25:
+                return "B";
+            case 26:
+                return "C";
+            case 27:
+                return "C";
+            case 28:
+                return "B";
+            case 29:
+                return "B";
+            case 30:
+                return "A";
+            case 31:
+                return "C";
+            case 32:
+                return "B";
+            case 33:
+                return "B";
+            case 34:
+                return "B";
+            case 35:
+                return "C";
+            case 36:
+                return "C";
+            case 37:
+                return "C";
+            case 38:
+                return "B";
+            case 39:
+                return "C";
+            case 40:
+                return "B";
+            default:
+                return ""; 
+                
+        }
+    }
+
+    function getExplanation(questionNumber) {
+        switch (questionNumber) {
+            case 1:
+                return "Public Wi-Fi networks can be insecure, making it easier for hackers to intercept data.";
+            case 2:
+                return "Verifying the sender's email address, checking for spelling errors, and contacting the organization directly are crucial steps in confirming the legitimacy of an email and avoiding potential phishing scams.";
+            case 3:
+                return "It's safer to avoid communication with strangers online.";
+            case 4:
+                return "Home address is considered personal information and should be kept private.";
+            case 5:
+                return "Strong passwords include a combination of letters, numbers, and symbols, making them more secure.";
+            case 6:
+                return "Pop-ups from unknown websites can be potentially harmful, so it's best to close them without interacting.";
+            case 7:
+                return "URLs starting with 'https' indicate a secure connection.";
+            case 8:
+                return "Checking the person's profile, mutual connections, and shared interests is a responsible approach to ensure the legitimacy of the friend request and protect your online safety.";
+            case 9:
+                return "A VPN encrypts the data transmitted over the internet, providing a secure and private connection. This helps protect sensitive information from being intercepted by malicious actors.";
+            case 10:
+                return "Sharing passwords can compromise the security of your personal information.";
+            case 11:
+                return "Never share sensitive information like your social security number online.";
+            case 12:
+                return "A strong password includes a mix of uppercase, lowercase, numbers, and symbols.";
+            case 13:
+                return "Phishing is an attempt to trick individuals into providing sensitive information.";
+            case 14:
+                return "Logging out ensures that others cannot access your accounts on a shared computer.";
+            case 15:
+                return "Clicking on suspicious links can introduce malware; a virus scan helps detect and remove potential threats.";
+            case 16:
+                return "Official sources provide secure and reliable software updates.";
+            case 17:
+                return "2FA adds an extra layer of security by requiring additional verification besides a password.";
+            case 18:
+                return "Sharing location information can pose risks to personal safety and privacy.";
+            case 19:
+                return "Cyberbullying is the use of electronic communication to bully or threaten others.";
+            case 20:
+                return "Firewalls help safeguard a computer by monitoring and controlling incoming and outgoing network traffic.";
+            case 21:
+                return "An email address is primarily used for sending and receiving electronic messages over the internet.";
+            case 22:
+                return "Phishing involves tricking individuals into revealing sensitive information through deceptive emails.";
+            case 23:
+                return "Regular updates help patch security vulnerabilities and protect your system from potential threats.";
+            case 24:
+                return "Deleting cookies helps clear the record of websites visited and stored information on your computer.";
+            case 25:
+                return "A padlock symbol in the address bar indicates a secure connection, ensuring safer transmission of personal information.";
+            case 26:
+                return "Web browsers are designed to navigate the internet and display content like websites and web pages.";
+            case 27:
+                return "Backups help protect against data loss and provide a way to restore important files.";
+            case 28:
+                return "CAPTCHAs are used to prevent automated bots from accessing and interacting with websites.";
+            case 29:
+                return "An IP address uniquely identifies a device on a network, allowing for communication between devices.";
+            case 30:
+                return "URL stands for Uniform Resource Locator and is used to specify addresses on the World Wide Web.";
+             case 31:
+                return " https in a URL indicates a secure and encrypted connection between your browser and the website.";
+            case 32:
+                return "Pop-ups from unknown websites can be potentially harmful, so it's best to close them without interacting.";
+            case 33:
+                return "Downloading means transferring a file from the internet to your computer or device.";
+            case 34:
+                return "http in a URL indicates a standard, non-secure connection.";
+            case 35:
+                return "A firewall monitors and controls network traffic to prevent unauthorized access and security threats.";
+            case 36:
+                return "Sharing location information can compromise privacy and safety, so it's important to be cautious.";
+            case 37:
+                return "Cyberbullying refers to the use of electronic communication to bully or harass individuals.";
+            case 38:
+                return "A strong password helps enhance security by protecting personal information from unauthorized access.";
+            case 39:
+                return "Running a virus scan can help detect and remove any potential threats from clicking on suspicious links.";
+            case 40:
+                return "Two-factor authentication adds an extra layer of security by requiring additional verification beyond a password.";
+            default:
+                return "";
+        }
+    }
+
+    // Initial load of the first question
+    loadNextQuestion();
+
+    
+</script>
+
+</body>
+</html>

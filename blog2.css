@@ -1,0 +1,115 @@
+* Reset margin and padding for the whole page */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #e9dbdb;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+}
+
+/* Style the navigation bar */
+.navbar {
+    background-color: #2e3e4e;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.navbar .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-links ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Hover effect for navigation bar links */
+.nav-links a:hover {
+    color: #ff5733;
+    transition: color 0.3s;
+}
+
+/* Style the footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Push to the bottom */
+}
+
+/* Style the content container */
+.content-container {
+    max-width: 800px;
+    margin: 20px auto; /* Center the container horizontally with spacing */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Slightly increase border radius */
+}
+
+/* Style headings within the content container */
+.content-container h1, .content-container h2 {
+    color: #2e3e4e;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Style ordered list items within the content container */
+.content-container ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+/* Style list items within the content container */
+.content-container li {
+    font-size: 18px; /* Slightly increase font size */
+    line-height: 1.6; /* Increase line height for better readability */
+}
+
+/* Style links within the content container */
+.content-container a {
+    color: #007BFF; /* Change link color to a blue shade */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* Hover effect for links within the content container */
+.content-container a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+/* Add a subtle background color to code blocks (if you have them in your content) */
+.content-container pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+    line-height: 1.4;
+}
+
+/* Style blockquotes for quotes in your content */
+.content-container blockquote {
+    border-left: 4px solid #2e3e4e; /* Add a left border for quotes */
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-style: italic;
+    background-color: #f7f7f7; /* Light gray background for quotes */
+}

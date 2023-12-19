@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="easy.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <title>Quiz</title>
+</head>
+<body>
+
+    <div class="navbar">
+        <a class="logo" href="#">Cybersecure</a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="getstarted.html">Get Started</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <br>
+
+    <h1>Level 3 Hard Quiz</h1> 
+
+    <div id="quiz-container">
+        <div class="question" id="current-question"></div>
+        <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
+        <button onclick="loadNextQuestion()">Next Question</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+       var currentQuestionNumber = 1;
+var correctAnswers = 0;
+var isQuestionSubmitted = false;
+
+function loadNextQuestion() {
+    var currentQuestionElement = document.getElementById("current-question");
+    var questionContent = getQuestionContent(currentQuestionNumber);
+
+    // Check if the user has submitted the current question before moving to the next one
+    if (!isQuestionSubmitted && currentQuestionNumber > 1) {
+        alert("Please submit your answer before moving to the next question.");
+        return;
+    }
+
+    // Reset the submission flag for the next question
+    isQuestionSubmitted = false;
+
+    if (questionContent) {
+        currentQuestionElement.innerHTML = questionContent;
+        currentQuestionNumber++;
+
+        // Show the "Submit" button for the new question
+        document.querySelector(".submit-btn").style.display = "block";
+    } else {
+        // No more questions, display quiz completion message or redirect to results page
+        currentQuestionElement.innerHTML = "Quiz completed!";
+        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
+        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
+        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
+    }
+
+    // Clear previous result
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("result").className = "";
+}
+
+function submitAnswer() {
+    var currentQuestionNumber = getCurrentQuestionNumber();
+    var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
+
+    if (userAnswer === "") {
+        alert("Please enter your answer before submitting.");
+        return;
+    }
+
+    // Set the flag to indicate that the current question has been submitted
+    isQuestionSubmitted = true;
+
+    checkAnswer(currentQuestionNumber);
+
+    // Hide the "Submit" button after submitting the answer
+    document.querySelector(".submit-btn").style.display = "none";
+}
+
+function getCurrentQuestionNumber() {
+    return currentQuestionNumber - 1;
+}
+
+function displayResults() {
+    var totalQuestions = currentQuestionNumber - 1;
+    var feedback = "";
+
+    if (correctAnswers === totalQuestions) {
+        feedback = "Congratulations! You answered all questions correctly.";
+    } else if (correctAnswers >= totalQuestions / 2) {
+        feedback = "Good job! You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    } else {
+        feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    }
+
+    document.getElementById("result").innerHTML = feedback;
+    document.getElementById("result").className = "quiz-completed";
+}
+
+function checkAnswer(questionNumber) {
+    var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+    var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+    var resultElement = document.getElementById("result");
+    var explanation = getExplanation(questionNumber);
+
+    if (userAnswer === correctAnswer) {
+        resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+        resultElement.className = "correct";
+        correctAnswers++;
+    } else {
+        resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+        resultElement.className = "incorrect";
+    }
+}
+
+        function getQuestionContent(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+    return `<strong>${questionNumber}: What is the purpose of a CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)?</strong>
+            <ul>
+                <li>A. To prevent automated bots from accessing a website</li>
+                <li>B. To improve website design</li>
+                <li>C. To enhance user experience</li>
+                <li>D. To analyze user behavior</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 2:
+    return `<strong>${questionNumber}: What is the primary purpose of two-factor authentication (2FA) in online security?</strong>
+            <ul>
+                <li>A. To create multiple accounts</li>
+                <li>B. To verify the user's identity using two different methods</li>
+                <li>C. To enhance internet speed</li>
+                <li>D. To increase storage capacity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 3:
+    return `<strong>${questionNumber}: What is the significance of keeping software and operating systems up to date for online security?</strong>
+            <ul>
+                <li>A. It only improves the user interface</li>
+                <li>B. Updates add new features but have no impact on security</li>
+                <li>C. Security vulnerabilities are often patched in updates, reducing the risk of exploitation</li>
+                <li>D. Updating software is optional and does not affect security</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 4:
+    return `<strong>${questionNumber}: What does the term "malware" refer to in the context of internet security?</strong>
+            <ul>
+                <li>A. Malicious software designed to harm computer systems</li>
+                <li>B. A type of internet browser</li>
+                <li>C. A secure online payment method</li>
+                <li>D. A computer programming language</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 5:
+    return `<strong>${questionNumber}: How can users protect themselves from the potential risks of public Wi-Fi networks?</strong>
+            <ul>
+                <li>A. Avoid using public Wi-Fi altogether</li>
+                <li>B. Always use the default passwords provided</li>
+                <li>C. Connect to virtual private networks (VPNs)</li>
+                <li>D. Share personal information freely</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 6:
+    return `<strong>${questionNumber}: What is the purpose of browser cookies, and how can users manage them for privacy?</strong>
+            <ul>
+                <li>A. To store website passwords</li>
+                <li>B. To track user preferences and activities</li>
+                <li>C. To improve internet speed</li>
+                <li>D. To block access to certain websites</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 7:
+    return `<strong>${questionNumber}: Why is it important to keep software and operating systems up to date for internet security?</strong>
+            <ul>
+                <li>A. To increase internet speed</li>
+                <li>B. To enhance the appearance of the user interface</li>
+                <li>C. To fix security vulnerabilities and bugs</li>
+                <li>D. To improve compatibility with older devices</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 8:
+    return `<strong>${questionNumber}: What is the significance of a firewall in the context of computer security?</strong>
+            <ul>
+                <li>A. To block access to all websites</li>
+                <li>B. To monitor internet speed</li>
+                <li>C. To filter and control incoming and outgoing network traffic</li>
+                <li>D. To enhance computer storage capacity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 9:
+    return `<strong>${questionNumber}: What are the potential risks of using easily guessable passwords, and how can users create strong passwords?</strong>
+            <ul>
+                <li>A. Risks: Increased internet speed; Strong passwords: Short and simple</li>
+                <li>B. Risks: Account compromise; Strong passwords: Long, complex, and unique</li>
+                <li>C. Risks: Improved user experience; Strong passwords: Common words and phrases</li>
+                <li>D. Risks: Enhanced security; Strong passwords: Easily memorable</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 10:
+    return `<strong>${questionNumber}: How can users identify and avoid online scams and fraudulent activities?</strong>
+            <ul>
+                <li>A. Click on suspicious links to investigate</li>
+                <li>B. Share personal information with unknown contacts</li>
+                <li>C. Use secure and verified websites for online transactions</li>
+                <li>D. Respond promptly to unsolicited emails requesting financial information</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 11:
+    return `<strong>${questionNumber}: What is the role of encryption in safeguarding data during online communication?</strong>
+            <ul>
+                <li>A. To decrease internet speed</li>
+                <li>B. To hide the user's online activities</li>
+                <li>C. To encode data to prevent unauthorized access</li>
+                <li>D. To enhance the visual appearance of websites</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+            // Additional questions
+
+case 12:
+    return `<strong>${questionNumber}: What is the concept of "zero-day vulnerabilities" in cybersecurity, and why are they considered a significant threat?</strong>
+            <ul>
+                <li>A. Newly discovered software bugs</li>
+                <li>B. Bugs that have been present for a long time</li>
+                <li>C. Software features with no security implications</li>
+                <li>D. A type of online gaming strategy</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 13:
+    return `<strong>${questionNumber}: How does a Distributed Denial of Service (DDoS) attack work, and what impact does it have on online services?</strong>
+            <ul>
+                <li>A. Enhances internet speed by distributing data efficiently</li>
+                <li>B. Disables a network or website by overwhelming it with traffic</li>
+                <li>C. Improves online security by diversifying server locations</li>
+                <li>D. Utilizes cloud computing for efficient data storage</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 14:
+    return `<strong>${questionNumber}: What is the significance of a "honeypot" in cybersecurity, and how does it contribute to identifying threats?</strong>
+            <ul>
+                <li>A. A sweet treat for cybersecurity professionals</li>
+                <li>B. A deceptive network or system designed to attract attackers</li>
+                <li>C. A type of malware that mimics honeybee behavior</li>
+                <li>D. An advanced encryption algorithm</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 15:
+    return `<strong>${questionNumber}: Explain the concept of "social engineering" in the context of cybersecurity, and why it poses a risk to organizations.</strong>
+            <ul>
+                <li>A. Using social media for cybersecurity purposes</li>
+                <li>B. Manipulating individuals to disclose confidential information</li>
+                <li>C. Developing strong interpersonal skills in the cybersecurity field</li>
+                <li>D. Implementing security measures in social networks</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 16:
+    return `<strong>${questionNumber}: What role does a Virtual Private Network (VPN) play in enhancing online privacy and security?</strong>
+            <ul>
+                <li>A. Increases internet speed for seamless browsing</li>
+                <li>B. Connects to a virtual private server for online gaming</li>
+                <li>C. Encrypts internet traffic for secure and anonymous browsing</li>
+                <li>D. Blocks access to specific websites for improved security</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 17:
+    return `<strong>${questionNumber}: Define the term "bug bounty program" in cybersecurity and explain its significance for organizations.</strong>
+            <ul>
+                <li>A. A program to eliminate software bugs completely</li>
+                <li>B. A financial reward for finding and reporting security vulnerabilities</li>
+                <li>C. A method to attract cybercriminals for investigation</li>
+                <li>D. A type of virus targeting computer systems</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 18:
+    return `<strong>${questionNumber}: What is the role of Artificial Intelligence (AI) in cybersecurity, and how does it contribute to threat detection and prevention?</strong>
+            <ul>
+                <li>A. Enhances the visual appeal of cybersecurity tools</li>
+                <li>B. Analyzes large datasets for patterns and anomalies to detect threats</li>
+                <li>C. Creates sophisticated malware to bypass security measures</li>
+                <li>D. Improves internet speed by optimizing network traffic</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 19:
+    return `<strong>${questionNumber}: How does the principle of "least privilege" enhance cybersecurity, and why is it important in access control?</strong>
+            <ul>
+                <li>A. Maximizes user privileges for improved functionality</li>
+                <li>B. Grants users the highest level of access by default</li>
+                <li>C. Assigns the minimum level of access necessary for tasks</li>
+                <li>D. Requires users to provide excessive personal information for access</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 20:
+    return `<strong>${questionNumber}: What is the role of a Security Information and Event Management (SIEM) system in cybersecurity, and how does it aid in incident detection and response?</strong>
+            <ul>
+                <li>A. Monitors internet speed for optimal performance</li>
+                <li>B. Encrypts all communication for secure information exchange</li>
+                <li>C. Enhances the aesthetic design of cybersecurity interfaces</li>
+                <li>D. Analyzes security incidents in real-time and logs relevant data</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+           
+case 21:
+    return `<strong>${questionNumber}: Explain the concept of "non-repudiation" in the context of cybersecurity and its importance in digital transactions.</strong>
+            <ul>
+                <li>A. Ensuring that data is not repeated during transmission</li>
+                <li>B. Verifying the identity of users through biometric authentication</li>
+                <li>C. Preventing denial of actions performed by a user</li>
+                <li>D. Enhancing internet speed through secure data transfer</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 22:
+    return `<strong>${questionNumber}: What is the role of a "hardware security module (HSM)" in cryptography, and how does it contribute to key management?</strong>
+            <ul>
+                <li>A. Maximizing internet speed through hardware-based encryption</li>
+                <li>B. Protecting cryptographic keys in a dedicated hardware device</li>
+                <li>C. Improving user experience with advanced hardware interfaces</li>
+                <li>D. Ignoring the importance of hardware-based security measures</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 23:
+    return `<strong>${questionNumber}: Define the term "side-channel attack" in cybersecurity, and explain how it exploits information leakage.</strong>
+            <ul>
+                <li>A. An attack targeting the side of a computer system</li>
+                <li>B. Gaining unauthorized access through the main system channel</li>
+                <li>C. Utilizing information leaked through unintended channels</li>
+                <li>D. Enhancing internet speed by optimizing data channels</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 24:
+    return `<strong>${questionNumber}: What is the purpose of a "security clearance" in controlling access to classified information, and how does it contribute to national security?</strong>
+            <ul>
+                <li>A. Maximizing user privileges for improved functionality</li>
+                <li>B. Granting access to information based on an individual's authorization level</li>
+                <li>C. Enhancing internet speed through secure clearance processes</li>
+                <li>D. Ignoring the significance of controlled access in national security</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 25:
+    return `<strong>${questionNumber}: Explain the concept of "threat intelligence" in cybersecurity, and how organizations use it to enhance their security posture.</strong>
+            <ul>
+                <li>A. Analyzing information about potential cyber threats to inform security decisions</li>
+                <li>B. Maximizing internet speed through real-time threat analysis</li>
+                <li>C. Improving user experience by monitoring online activities</li>
+                <li>D. Ignoring the importance of intelligence in cybersecurity practices</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 26:
+    return `<strong>${questionNumber}: What is the purpose of "penetration testing" in cybersecurity, and how does it contribute to identifying vulnerabilities?</strong>
+            <ul>
+                <li>A. Conducting simulated cyber attacks to identify security weaknesses</li>
+                <li>B. Maximizing user privileges for improved functionality</li>
+                <li>C. Enhancing internet speed through advanced testing methods</li>
+                <li>D. Ignoring the importance of testing in cybersecurity practices</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 27:
+    return `<strong>${questionNumber}: Define the term "hash function" in cryptography, and explain its role in data integrity.</strong>
+            <ul>
+                <li>A. A function that enhances internet speed through data optimization</li>
+                <li>B. Improving user experience through advanced data encryption</li>
+                <li>C. Converting data into a fixed-size string of characters</li>
+                <li>D. Ignoring the significance of data integrity in cryptography</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 28:
+    return `<strong>${questionNumber}: What is the role of a "Security Operations Center (SOC)" in cybersecurity, and how does it aid in real-time threat detection and response?</strong>
+            <ul>
+                <li>A. Maximizing internet speed through continuous monitoring</li>
+                <li>B. Ignoring the importance of real-time monitoring in cybersecurity</li>
+                <li>C. Enhancing user experience with advanced security interfaces</li>
+                <li>D. Monitoring and analyzing security incidents in real-time</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 29:
+    return `<strong>${questionNumber}: Explain the concept of "containerization" in the context of cybersecurity, and how it enhances application security.</strong>
+            <ul>
+                <li>A. An approach to maximize internet speed for containerized applications</li>
+                <li>B. Improving user experience through container-based interfaces</li>
+                <li>C. Isolating and packaging applications along with their dependencies</li>
+                <li>D. Ignoring the significance of application isolation in cybersecurity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 30:
+    return `<strong>${questionNumber}: What is the significance of "security awareness training" for employees, and how does it contribute to preventing social engineering attacks?</strong>
+            <ul>
+                <li>A. Maximizing user privileges for improved functionality</li>
+                <li>B. Providing employees with knowledge to recognize and avoid security threats</li>
+                <li>C. Enhancing internet speed through continuous training programs</li>
+                <li>D. Ignoring the importance of employee training in cybersecurity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 31:
+    return `<strong>${questionNumber}: Define the term "biometric authentication" in cybersecurity, and explain how it enhances user identification.</strong>
+            <ul>
+                <li>A. A method to increase internet speed through biometric analysis</li>
+                <li>B. Improving user experience through advanced authentication methods</li>
+                <li>C. Using personal characteristics for secure user identification</li>
+                <li>D. Ignoring the significance of biometrics in cybersecurity practices</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 32:
+    return `<strong>${questionNumber}: What is the role of "incident response planning" in cybersecurity, and how does it aid organizations in handling security breaches effectively?</strong>
+            <ul>
+                <li>A. Maximizing internet speed through incident response measures</li>
+                <li>B. Ignoring the importance of incident response planning in cybersecurity</li>
+                <li>C. Enhancing user experience with advanced incident response interfaces</li>
+                <li>D. Developing a structured approach to managing and mitigating security incidents</li>
+            </ul
+
+>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 33:
+    return `<strong>${questionNumber}: Explain the concept of "blockchain" in the context of cybersecurity, and how it ensures the integrity of data.</strong>
+            <ul>
+                <li>A. A method to maximize internet speed through decentralized data storage</li>
+                <li>B. A distributed and decentralized ledger technology for secure transactions</li>
+                <li>C. Improving user experience through advanced blockchain interfaces</li>
+                <li>D. Ignoring the significance of blockchain in data integrity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 34:
+    return `<strong>${questionNumber}: What is the purpose of "application whitelisting" in cybersecurity, and how does it contribute to preventing unauthorized software execution?</strong>
+            <ul>
+                <li>A. Allowing only approved applications to run on a system</li>
+                <li>B. Maximizing user privileges for improved functionality</li>
+                <li>C. Enhancing internet speed through advanced application controls</li>
+                <li>D. Ignoring the importance of application controls in cybersecurity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 35:
+    return `<strong>${questionNumber}: Define the term "zero-trust security" in cybersecurity, and explain how it challenges traditional security models.</strong>
+            <ul>
+                <li>A. A security approach that trusts all users by default</li>
+                <li>B. Trusting users based on their access privileges</li>
+                <li>C. Improving user experience through trust-based security models</li>
+                <li>D. An approach that trusts no one and verifies everyone, regardless of location or network.</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 36:
+    return `<strong>${questionNumber}: Explain the concept of "homomorphic encryption" in cryptography, and how it addresses the challenge of secure data processing in the cloud.</strong>
+            <ul>
+                <li>A. A method to enhance internet speed through cloud-based encryption</li>
+                <li>B. Allowing computation on encrypted data without decryption</li>
+                <li>C. Improving user experience with advanced cloud security measures</li>
+                <li>D. Ignoring the importance of secure data processing in the cloud</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 37:
+    return `<strong>${questionNumber}: What is the significance of "supply chain security" in cybersecurity, and how does it protect against third-party vulnerabilities?</strong>
+            <ul>
+                <li>A. Maximizing internet speed through secure supply chain practices</li>
+                <li>B. Enhancing user experience with advanced supply chain interfaces</li>
+                <li>C. Protecting against vulnerabilities introduced through third-party components</li>
+                <li>D. Ignoring the importance of supply chain security in cybersecurity</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 38:
+    return `<strong>${questionNumber}: Define the term "side-channel analysis" in cryptographic attacks, and explain how it exploits unintended information leakage.</strong>
+            <ul>
+                <li>A. A method to maximize internet speed through advanced cryptographic analysis</li>
+                <li>B. Analyzing unintended information leakage to extract cryptographic keys</li>
+                <li>C. Improving user experience with side-channel-based encryption methods</li>
+                <li>D. Ignoring the significance of information leakage in cryptographic attacks</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 39:
+    return `<strong>${questionNumber}: What is the role of "container orchestration" in managing and deploying containerized applications securely?</strong>
+            <ul>
+                <li>A. Maximizing user privileges for improved functionality</li>
+                <li>B. Enhancing internet speed through advanced container management</li>
+                <li>C. Orchestrating the deployment and scaling of containerized applications</li>
+                <li>D. Ignoring the importance of containerization in application security</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+case 40:
+    return `<strong>${questionNumber}: Explain the concept of "fuzz testing" in cybersecurity, and how it helps identify software vulnerabilities.</strong>
+            <ul>
+                <li>A. A method to increase internet speed through rapid software testing</li>
+                <li>B. Systematically injecting invalid or unexpected inputs to identify vulnerabilities</li>
+                <li>C. Improving user experience with advanced testing methodologies</li>
+                <li>D. Ignoring the importance of software testing in cybersecurity practices</li>
+            </ul>
+            <input type="text" id="answer${questionNumber}">`;
+
+
+            default:
+                    return null; // Return null when there are no more questions
+            }
+        }
+
+        function checkAnswer(questionNumber) {
+            var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+            var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+            var resultElement = document.getElementById("result");
+            var explanation = getExplanation(questionNumber);
+
+            if (userAnswer === correctAnswer) {
+                resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+                resultElement.className = "correct";
+            } else {
+                resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+                resultElement.className = "incorrect";
+            }
+        }
+
+        function getCorrectAnswer(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+                    return "A";
+                case 2:
+                    return "B";
+                case 3:
+                    return "C";
+                case 4:
+                    return "A";
+                case 5:
+                    return "C";
+                case 6:
+                    return "B";
+                case 7:
+                    return "C";
+                case 8:
+                    return "C";
+                case 9:
+                    return "B";
+                case 10:
+                    return "C";
+                case 11:
+                    return "C";
+                case 12:
+                    return "A";
+                case 13:
+                    return "B";
+                case 14:
+                    return "B";
+                case 15:
+                    return "B";
+                case 16:
+                    return "C";
+                case 17:
+                    return "B";
+                case 18:
+                    return "B";
+                case 19:
+                    return "C";
+                case 20:
+                    return "D";
+                case 21:
+                    return "C";
+                case 22:
+                    return "B";
+                case 23:
+                    return "C";
+                case 24:
+                    return "B";
+                case 25:
+                    return "A";
+                case 26:
+                    return "A";
+                case 27:
+                    return "C";
+                case 28:
+                    return "D";
+                case 29:
+                    return "C";
+                case 30:
+                    return "B";
+                case 31:
+                    return "C";
+                case 32:
+                    return "D";
+                case 33:
+                    return "B";
+                case 34:
+                    return "A";
+                case 35:
+                    return "D";
+                case 36:
+                    return "B";
+                case 37:
+                    return "C";
+                case 38:
+                    return "B";
+                case 39:
+                    return "C";
+                case 40:
+                    return "B";
+                default:
+                    return "";
+                
+            }
+        }
+
+        function getExplanation(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+                    return "CAPTCHA is designed to distinguish between human users and automated bots, helping to protect websites from malicious activities.Phishing is a fraudulent attempt to obtain sensitive information, such as usernames, passwords, and credit card details, by posing as a trustworthy entity.";
+                case 2:
+                    return "Two-factor authentication adds an extra layer of security by requiring users to provide two forms of identification before accessing an account.";
+                case 3:
+                    return " Regular software updates often include security patches, addressing vulnerabilities that could be exploited by attackers. Keeping software up to date is crucial for a secure online environment.";
+                case 4:
+                    return "Malware is software intentionally designed to damage or exploit computer systems and networks. It includes viruses, spyware, and other harmful programs.";
+                case 5:
+                    return "Using a VPN on public Wi-Fi networks encrypts the connection, providing an additional layer of security and protecting sensitive data.";
+                case 6:
+                    return "Browser cookies are used to store user data, such as preferences and login information. Users can manage them to control privacy settings and clear unwanted data.";
+                case 7:
+                    return "Regularly updating software and operating systems is crucial to patching security vulnerabilities and ensuring protection against potential threats.";
+                case 8:
+                    return "A firewall acts as a barrier between a secure internal network and untrusted external networks, controlling the flow of data and preventing unauthorized access.";
+                case 9:
+                    return "Easily guessable passwords pose a risk of unauthorized access, while strong passwords should be long, complex, and unique to enhance security.";
+                case 10:
+                    return "To avoid scams, users should ensure they are using secure and verified websites for online transactions and refrain from sharing personal information with unknown sources.";
+                case 11:
+                    return "Encryption converts data into a code to protect it from unauthorized access, ensuring secure communication and safeguarding sensitive information during online activities.";
+                case 12:
+                    return "Zero-day vulnerabilities are newly discovered software bugs that can be exploited by hackers before the software developers release a fix.";
+                case 13:
+                    return "A DDoS attack overwhelms a network or website with a flood of traffic, rendering it inaccessible to legitimate users.";
+                case 14:
+                    return "A honeypot is a deceptive system or network set up to attract attackers, allowing cybersecurity professionals to study their tactics and identify potential threats.";
+                case 15:
+                    return "Social engineering involves manipulating individuals to divulge sensitive information, posing a significant risk to organizational security.";
+                case 16:
+                    return "A VPN encrypts internet traffic, providing secure and anonymous browsing by masking the user's IP address.";
+                case 17:
+                    return "Bug bounty programs offer financial rewards to individuals who identify and responsibly disclose security vulnerabilities, encouraging ethical hacking and improving overall security.";
+                case 18:
+                    return "AI in cybersecurity analyzes large datasets to detect patterns and anomalies, improving threat detection and prevention.";
+                case 19:
+                    return "The principle of least privilege restricts users to the minimum level of access needed for their tasks, reducing the potential impact of security breaches.";
+                case 20:
+                    return "A SIEM system monitors and analyzes security incidents in real-time, providing valuable data for incident detection and response.";
+                case 21:
+                    return "Non-repudiation ensures that a user cannot deny the authenticity of their actions, providing accountability in digital transactions.";
+                case 22:
+                    return "An HSM is a dedicated hardware device that safeguards cryptographic keys, enhancing key management and overall security.";
+                case 23:
+                    return "A side-channel attack exploits information leaked through unintended channels (e.g., power consumption, electromagnetic emissions) to gain unauthorized access.";
+                case 24:
+                    return "Security clearances control access to classified information based on an individual's authorization level, contributing to national security.";
+                case 25:
+                    return " Threat intelligence involves analyzing information about potential cyber threats to make informed security decisions and enhance overall cybersecurity posture.";
+                case 26:
+                    return "Penetration testing involves simulating cyber attacks to identify security weaknesses and assess the resilience of a system.";
+                case 27:
+                    return " A hash function converts data into a fixed-size string of characters, ensuring data integrity by generating a unique hash value for each set of data.";
+                case 28:
+                    return "A Security Operations Center monitors and analyzes security incidents in real-time, aiding in rapid threat detection and response.";
+                case 29:
+                    return "Containerization involves isolating and packaging applications along with their dependencies, enhancing security and portability.";
+                case 30:
+                    return " Security awareness training provides employees with the knowledge to recognize and avoid security threats, contributing to the prevention of social engineering attacks.";
+                case 31:
+                    return "Biometric authentication uses personal characteristics (such as fingerprints or facial recognition) for secure and unique user identification.";
+                case 32:
+                    return "Incident response planning involves developing a structured approach to managing and mitigating security incidents, aiding organizations in handling breaches effectively.";
+                case 33:
+                    return "Blockchain is a distributed and decentralized ledger technology that ensures the integrity of data through secure and transparent transactions.";
+                case 34:
+                    return "Application whitelisting allows only approved applications to run on a system, preventing unauthorized software execution.";
+                case 35:
+                    return "Zero-trust security challenges traditional models by assuming no inherent trust, requiring verification for every user and device, regardless of their location or network.";
+                case 36:
+                    return " Homomorphic encryption enables computation on encrypted data without the need for decryption, addressing the challenge of secure data processing in the cloud.";
+                case 37:
+                    return "Supply chain security safeguards against vulnerabilities introduced through third-party components, ensuring the integrity of the overall system.";
+                case 38:
+                    return "Side-channel analysis involves exploiting unintended information leakage to extract cryptographic keys, compromising the security of the system.";
+                case 39:
+                    return "Container orchestration manages the deployment and scaling of containerized applications, ensuring secure and efficient operations.";
+                case 40:
+                    return "Fuzz testing involves systematically injecting invalid or unexpected inputs into software to identify vulnerabilities and weaknesses in its security measures.";
+                
+                
+                default:
+                    return "";
+            }
+        }
+
+        loadNextQuestion(); // Initial load of the first question
+    </script>
+
+</body>
+</html>

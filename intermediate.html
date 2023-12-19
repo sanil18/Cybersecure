@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="easy.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Quiz</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a class="logo" href="#">Cybersecure</a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="getstarted.html">Get Started</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <br>
+
+    <h1>Level 2 Intermediate Quiz</h1>
+
+    <div id="quiz-container">
+        <!-- Placeholder for the question content -->
+        <div class="question" id="current-question">
+            <!-- Question content will be loaded here dynamically -->
+        </div>
+
+        <!-- "Submit" and "Next Question" buttons -->
+        <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
+        <button onclick="loadNextQuestion()">Next Question</button>
+        <button onclick="displayResults()" id="show-results-btn" style="display: none;">Show Results</button>
+
+        <div id="result"></div>
+    </div>
+
+<script>
+var currentQuestionNumber = 1;
+var correctAnswers = 0;
+var isQuestionSubmitted = false;
+
+function loadNextQuestion() {
+    var currentQuestionElement = document.getElementById("current-question");
+    var questionContent = getQuestionContent(currentQuestionNumber);
+
+    // Check if the user has submitted the current question before moving to the next one
+    if (!isQuestionSubmitted && currentQuestionNumber > 1) {
+        alert("Please submit your answer before moving to the next question.");
+        return;
+    }
+
+    // Reset the submission flag for the next question
+    isQuestionSubmitted = false;
+
+    if (questionContent) {
+        currentQuestionElement.innerHTML = questionContent;
+        currentQuestionNumber++;
+
+        // Show the "Submit" button for the new question
+        document.querySelector(".submit-btn").style.display = "block";
+    } else {
+        // No more questions, display quiz completion message or redirect to results page
+        currentQuestionElement.innerHTML = "Quiz completed!";
+        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
+        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
+        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
+    }
+
+    // Clear previous result
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("result").className = "";
+}
+
+function submitAnswer() {
+    var currentQuestionNumber = getCurrentQuestionNumber();
+    var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
+
+    if (userAnswer === "") {
+        alert("Please enter your answer before submitting.");
+        return;
+    }
+
+    // Set the flag to indicate that the current question has been submitted
+    isQuestionSubmitted = true;
+
+    checkAnswer(currentQuestionNumber);
+
+    // Hide the "Submit" button after submitting the answer
+    document.querySelector(".submit-btn").style.display = "none";
+}
+
+function getCurrentQuestionNumber() {
+    return currentQuestionNumber - 1;
+}
+
+function displayResults() {
+    var totalQuestions = currentQuestionNumber - 1;
+    var feedback = "";
+
+    if (correctAnswers === totalQuestions) {
+        feedback = "Congratulations! You answered all questions correctly.";
+    } else if (correctAnswers >= totalQuestions / 2) {
+        feedback = "Good job! You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    } else {
+        feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+    }
+
+    document.getElementById("result").innerHTML = feedback;
+    document.getElementById("result").className = "quiz-completed";
+}
+
+function checkAnswer(questionNumber) {
+    var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+    var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+    var resultElement = document.getElementById("result");
+    var explanation = getExplanation(questionNumber);
+
+    if (userAnswer === correctAnswer) {
+        resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+        resultElement.className = "correct";
+        correctAnswers++;
+    } else {
+        resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+        resultElement.className = "incorrect";
+    }
+}
+
+
+
+        function getQuestionContent(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+                    return `
+                    <strong>${questionNumber}: What is malware?</strong>
+                <ul>
+                    <li>A. A type of gardening tool</li>
+                    <li>B. A popular dance move</li>
+                    <li>C. Software designed to harm or exploit computer systems</li>
+                    <li>D. A new type of smartphone</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 2:
+            return `
+                <strong>${questionNumber}: What is encryption, and how does it contribute to online security?</strong>
+                <ul>
+                    <li>A. The process of converting information into code to prevent unauthorized access</li>
+                    <li>B. A method of translating languages</li>
+                    <li>C. A new type of computer game</li>
+                    <li>D. A form of cloud computing</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 3:
+            return `
+                <strong>${questionNumber}: What is the dark web, and why is it considered a potential security risk?</strong>
+                <ul>
+                    <li>A. A new style of fashion design</li>
+                    <li>B. A hidden part of the internet accessible only with special software</li>
+                    <li>C. A type of energy drink</li>
+                    <li>D. A secret society for computer programmers</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 4:
+            return `
+                <strong>${questionNumber}: What is a DDoS attack, and how can it impact online services?</strong>
+                <ul>
+                    <li>A. A type of dance competition</li>
+                    <li>B. A programming language</li>
+                    <li>C. A new form of digital currency</li>
+                    <li>D. Distributed Denial of Service attack, overwhelming a system with traffic</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 5:
+            return `
+                <strong>${questionNumber}: Define "phishing," and provide an example of a phishing technique.</strong>
+                <ul>
+                    <li>A. A type of fishing equipment</li>
+                    <li>B. Deceptive attempts to obtain sensitive information by posing as a trustworthy entity</li>
+                    <li>C. A form of outdoor recreational activity</li>
+                    <li>D. A genre of music</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 6:
+            return `
+                <strong>${questionNumber}: What is a proxy server, and how does it contribute to online privacy?</strong>
+                <ul>
+                    <li>A. A new type of smartphone application</li>
+                    <li>B. A server that acts as an intermediary between a user and the internet</li>
+                    <li>C. A form of computer virus</li>
+                    <li>D. A style of photography</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 7:
+            return `
+                <strong>${questionNumber}: Explain the concept of digital footprint and why it's important to manage it.</strong>
+                <ul>
+                    <li>A. A type of shoe designed for running</li>
+                    <li>B. The traces of online activities left by an individual</li>
+                    <li>C. A new type of electronic signature</li>
+                    <li>D. A measurement of internet speed</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 8:
+            return `
+                <strong>${questionNumber}: What is the significance of regular data backups in terms of cybersecurity?</strong>
+                <ul>
+                    <li>A. A method of saving computer game progress</li>
+                    <li>B. Creating copies of important data to prevent data loss</li>
+                    <li>C. A new type of computer hardware</li>
+                    <li>D. A strategy for organizing files</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 9:
+            return `
+                <strong>${questionNumber}: Define "ransomware," and explain how it can impact individuals and organizations.</strong>
+                <ul>
+                    <li>A. A new type of online shopping platform</li>
+                    <li>B. A form of online gaming</li>
+                    <li>C. Malicious software that encrypts files and demands payment for their release</li>
+                    <li>D. A style of digital art</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 10:
+            return `
+                <strong>${questionNumber}: What is the role of ethical hacking in cybersecurity, and why is it important?</strong>
+                <ul>
+                    <li>A. A new type of computer programming language</li>
+                    <li>B. Hacking conducted by cybercriminals</li>
+                    <li>C. The practice of testing systems for security vulnerabilities with the owner's permission</li>
+                    <li>D. A form of online competition</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 11:
+            return `
+                <strong>${questionNumber}: What is a zero-day vulnerability, and why is it a concern in cybersecurity?</strong>
+                <ul>
+                    <li>A. A flaw in software unknown to the vendor and unpatched</li>
+                    <li>B. A method for counting days since a security breach</li>
+                    <li>C. A new type of gaming console</li>
+                    <li>D. A term for computer systems that have never been compromised</li>
+                    </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 12:
+            return `
+                <strong>${questionNumber}: Define "social engineering" and provide an example of a social engineering tactic.</strong>
+                <ul>
+                    <li>A. A new type of social media platform</li>
+                    <li>B. A style of interpersonal communication</li>
+                    <li>C. A form of crowd psychology</li>
+                    <li>D. Manipulating individuals to divulge confidential information</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 13:
+            return `
+                <strong>${questionNumber}: What is the role of a penetration tester in cybersecurity, and how does it differ from an ethical hacker?</strong>
+                <ul>
+                    <li>A. A new type of cybersecurity certification</li>
+                    <li>B. An individual hired to test the security of a system by attempting to exploit vulnerabilities</li>
+                    <li>C. A type of computer programming language</li>
+                    <li>D. A form of competitive hacking</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 14:
+            return `
+                <strong>${questionNumber}: Explain the concept of "cyber threat intelligence" and its role in proactive cybersecurity.</strong>
+                <ul>
+                    <li>A. Information about potential cyber threats used to inform decision-making</li>
+                    <li>B. A new type of antivirus software</li>
+                    <li>C. A method of online research</li>
+                    <li>D. A type of computer algorithm</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 15:
+            return `
+                <strong>${questionNumber}: What is the importance of secure coding practices in software development?</strong>
+                <ul>
+                    <li>A. A new style of software interface design</li>
+                    <li>B. A method of software testing</li>
+                    <li>C Writing code with a focus on minimizing security vulnerabilities</li>
+                    <li>D. A form of project management</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 16:
+            return `
+                <strong>${questionNumber}: Define "man-in-the-middle attack," and describe how it can compromise communication.</strong>
+                <ul>
+                    <li>A. A new type of communication device</li>
+                    <li>B. Intercepting and altering communication between two parties without their knowledge</li>
+                    <li>C. A type of encryption method</li>
+                    <li>D. A style of public speaking</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 17:
+            return `
+                <strong>${questionNumber}: What is a security token, and how does it contribute to authentication?</strong>
+                <ul>
+                    <li>A. A new type of cryptocurrency</li>
+                    <li>B. A physical or digital device used to generate secure authentication codes</li>
+                    <li>C. A method of secure file storage</li>
+                    <li>D. A form of biometric authentication</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 18:
+            return `
+                <strong>${questionNumber}: Define "cybersecurity incident response" and explain its key components.</strong>
+                <ul>
+                    <li>A. A new type of cybersecurity insurance</li>
+                    <li>B. A form of legal action against cybercriminals</li>
+                    <li>C. A type of computer virus</li>
+                    <li>D. The process of managing and mitigating the impact of a cybersecurity incident</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 19:
+            return `
+                <strong>${questionNumber}: What is the significance of network segmentation in enhancing cybersecurity?</strong>
+                <ul>
+                    <li>A. Dividing a network into segments to contain potential security breaches</li>
+                    <li>B. A new type of network protocol</li>
+                    <li>C. A form of network optimization</li>
+                    <li>D. A strategy for increasing internet speed</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+            `;
+        case 20:
+            return `
+                <strong>${questionNumber}: Explain the concept of "sandboxing" in the context of cybersecurity.</strong>
+                <ul>
+                    <li>A. A new type of malware protection</li>
+                    <li>B. A method of secure file sharing</li>
+                    <li>C. Running untrusted programs in an isolated environment for testing</li>
+                    <li>D. A type of secure online storage</li>
+                </ul>
+                <input type="text" id="answer${questionNumber}">
+                `;
+
+        case 21:
+             return `
+        <strong> ${questionNumber}:What is the role of biometric authentication in enhancing security, and what are its potential drawbacks? </strong>
+        <ul>
+            <li>A. A new type of computer hardware</li>
+            <li>B. Authentication based on unique physical or behavioral characteristics</li>
+            <li>C. A method of secure file encryption</li>
+            <li>D. A form of secure internet browsing</li>
+        </ul>
+        <input type="text" id="answer21">
+    `;
+
+case 22:
+    return `
+        <strong>${questionNumber}: Define "blockchain" and explain its role in securing transactions. </strong>
+        <ul>
+            <li>A. A decentralized and tamper-resistant ledger technology</li>
+            <li>B. A new type of computer network</li>
+            <li>C. A method of secure communication</li>
+            <li>D. A form of cryptocurrency</li>
+        </ul>
+        <input type="text" id="answer22">
+    `;
+
+case 23:
+    return `
+        <strong>${questionNumber}: What is the concept of "least privilege" in the context of user access rights, and why is it important for cybersecurity? </strong>
+        <ul>
+            <li>A. A new type of user authentication method</li>
+            <li>B. A style of computer programming</li>
+            <li>C. A method of secure file storage</li>
+            <li>D. Granting users the minimum level of access required for their tasks</li>
+        </ul>
+        <input type="text" id="answer23">
+    `;
+
+
+    case 24:
+    return `
+        <strong>${questionNumber}: Explain the role of a security policy in an organization's cybersecurity strategy. </strong>
+        <ul>
+            <li>A. A new type of antivirus software</li>
+            <li>B. A set of guidelines and rules to ensure the security of information and systems</li>
+            <li>C. A method of secure communication</li>
+            <li>D. A type of secure network protocol</li>
+        </ul>
+        <input type="text" id="answer24">
+    `;
+
+case 25:
+    return `
+        <strong>${questionNumber}: Define "security awareness training" and its significance in preventing cyber threats. </strong>
+        <ul>
+            <li>A. A new type of computer game</li>
+            <li>B. A method of secure communication</li>
+            <li>C. Training programs to educate individuals about cybersecurity risks and best practices</li>
+            <li>D. A form of virtual reality technology</li>
+        </ul>
+        <input type="text" id="answer25">
+    `;
+
+case 26:
+    return `
+        <strong>${questionNumber}: What is a "honeypot" in the context of cybersecurity, and how is it used to enhance security? </strong>
+        <ul>
+            <li>A. A new type of antivirus software</li>
+            <li>B. A decoy system designed to attract and detect attackers</li>
+            <li>C. A method of secure file sharing</li>
+            <li>D. A form of encrypted communication</li>
+        </ul>
+        <input type="text" id="answer26">
+    `;
+
+case 27:
+    return `
+        <strong>${questionNumber}: Define "risk assessment" in the context of cybersecurity, and explain its role in decision-making. </strong>
+        <ul>
+            <li>A. Evaluating potential security risks and vulnerabilities in an organization</li>
+            <li>B. A new type of cybersecurity certification</li>
+            <li>C. A method of secure email communication</li>
+            <li>D. A form of secure document storage</li>
+        </ul>
+        <input type="text" id="answer27">
+    `;
+
+case 28:
+    return `
+        <strong>${questionNumber}: What is the role of a security incident log in cybersecurity, and why is it important for forensic analysis? </strong>
+        <ul>
+            <li>A. A new type of antivirus software</li>
+            <li>B. A method of secure data transmission</li>
+            <li>C. Recording details of security incidents for analysis and investigation</li>
+            <li>D. A form of secure document storage</li>
+        </ul>
+        <input type="text" id="answer28">
+    `;
+
+case 29:
+    return `
+        <strong>${questionNumber}: Explain the concept of "supply chain security" and its importance in cybersecurity. </strong>
+        <ul>
+            <li>A. A new type of cybersecurity insurance</li>
+            <li>B. A form of secure document storage</li>
+            <li>C. A method of secure online shopping</li>
+            <li>D. Protecting the security of the entire supply chain, from manufacturing to delivery</li>
+        </ul>
+        <input type="text" id="answer29">
+    `;
+
+case 30:
+    return `
+        <strong>${questionNumber}: What is the significance of a bug bounty program in cybersecurity, and how does it encourage ethical hacking? </strong>
+        <ul>
+            <li>A. A new type of computer virus</li>
+            <li>B. A reward program for individuals who responsibly disclose security vulnerabilities</li>
+            <li>C. A method of secure email communication</li>
+            <li>D. A form of secure document storage</li>
+        </ul>
+        <input type="text" id="answer30">
+    `;
+
+    case 31:
+    return `
+        <strong>${questionNumber}:What is the significance of secure coding practices in software development?</strong>
+        <ul>
+            <li>A. A new style of software interface design</li>
+            <li>B. Writing code with a focus on minimizing security vulnerabilities</li>
+            <li>C. A method of software testing</li>
+            <li>D. A form of project management</li>
+        </ul>
+        <input type="text" id="answer31">
+    `;
+
+case 32:
+    return `
+        <strong>${questionNumber}:Define "man-in-the-middle attack," and describe how it can compromise communication.</strong>
+        <ul>
+            <li>A. A new type of communication device</li>
+            <li>B. Intercepting and altering communication between two parties without their knowledge</li>
+            <li>C. A type of encryption method</li>
+            <li>D. A style of public speaking</li>
+        </ul>
+        <input type="text" id="answer32">
+    `;
+
+case 33:
+    return `
+        <strong>${questionNumber}:What is a security token, and how does it contribute to authentication?</strong>
+        <ul>
+            <li>A. A physical or digital device used to generate secure authentication codes</li>
+            <li>B. A new type of cryptocurrency</li>
+            <li>C. A method of secure file sharing</li>
+            <li>D. A form of biometric authentication</li>
+        </ul>
+        <input type="text" id="answer33">
+    `;
+
+case 34:
+    return `
+        <strong>${questionNumber}:Define "cybersecurity incident response" and explain its key components.</strong>
+        <ul>
+            <li>A. A new type of cybersecurity insurance</li>
+            li>B. A form of legal action against cybercriminals</li>
+            <li>C. A type of computer virus</li>
+            <<li>D. The process of managing and mitigating the impact of a cybersecurity incident</li>
+        </ul>
+        <input type="text" id="answer34">
+    `;
+
+case 35:
+    return `
+        <strong>${questionNumber}:What is the role of ethical hacking in cybersecurity, and why is it important?</strong>
+        <ul>
+            <li>A. A new type of computer programming language</li>
+            <li>B. Hacking conducted by cybercriminals</li>
+            <li>C. The practice of testing systems for security vulnerabilities with the owner's permission</li>
+            <li>D. A form of online competition</li>
+        </ul>
+        <input type="text" id="answer35">
+    `;
+
+case 36:
+    return `
+        <strong>${questionNumber}:What is the role of biometric authentication in enhancing security, and what are its potential drawbacks?</strong>
+        <ul>
+            <li>A. A new type of computer hardware</li>
+            <li>B. Authentication based on unique physical or behavioral characteristics</li>
+            <li>C. A method of secure file encryption</li>
+            <li>D. A form of secure internet browsing</li>
+        </ul>
+        <input type="text" id="answer36">
+    `;
+
+case 37:
+    return `
+        <strong>${questionNumber}:Define "blockchain" and explain its role in securing transactions.</strong>
+        <ul>
+            <li>A. A new type of computer network</li>
+            <li>B. A decentralized and tamper-resistant ledger technology</li>
+            <li>C. A method of secure communication</li>
+            <li>D. A form of cryptocurrency</li>
+        </ul>
+        <input type="text" id="answer37">
+    `;
+
+case 38:
+    return `
+        <strong>${questionNumber}:What is the concept of "least privilege" in the context of user access rights, and why is it important for cybersecurity?</strong>
+        <ul>
+            <li>A. A new type of user authentication method</li>
+            <li>B. A style of computer programming</li>
+            <li>C. A method of secure file storage</li>
+            <li>D. Granting users the minimum level of access required for their tasks</li>
+        </ul>
+        <input type="text" id="answer38">
+    `;
+
+case 39:
+    return `
+        <strong>${questionNumber}:Explain the role of a security policy in an organization's cybersecurity strategy.</strong>
+        <ul>
+            <li>A. A set of guidelines and rules to ensure the security of information and systems</li>
+            <li>B. A new type of antivirus software</li>
+            <li>C. A method of secure communication</li>
+            <li>D. A type of secure network protocol</li>
+        </ul>
+        <input type="text" id="answer39">
+    `;
+
+case 40:
+    return `
+        <strong>${questionNumber}:Define "security awareness training" and its significance in preventing cyber threats.</strong>
+        <ul>
+            <li>A. A new type of computer game</li>
+            <li>B. Training programs to educate individuals about cybersecurity risks and best practices</li>
+            <li>C. A method of secure communication</li>
+            <li>D. A form of virtual reality technology</li>
+        </ul>
+        <input type="text" id="answer40">
+    `;
+
+                default:
+                    return null; // Return null when there are no more questions
+            }
+        }
+
+
+        function getCorrectAnswer(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+                    return "C";
+                case 2:
+                    return "A";
+                case 3:
+                    return "B";
+                case 4:
+                    return "D";
+                case 5:
+                    return "B";
+                case 6:
+                    return "A";
+                case 7:
+                    return "B";
+                case 8:
+                    return "B";
+                case 9:
+                    return "C";
+                case 10:
+                    return "C";
+                case 11:
+                    return "A";
+                case 12:
+                    return "D";
+                case 13:
+                    return "B";
+                case 14:
+                    return "A";
+                case 15:
+                    return "A";
+                case 16:
+                    return "B";
+                case 17:
+                    return "B";
+                case 18:
+                    return "D";
+                case 19:
+                    return "A";
+                case 20:
+                    return "C";
+                 case 21:
+                    return "B";
+                case 22:
+                    return "A";
+                case 23:
+                    return "D";
+                case 24:
+                    return "B";
+                case 25:
+                    return "C";
+                case 26:
+                    return "C";
+                case 27:
+                    return "B";
+                case 28:
+                    return "A";
+                case 29:
+                    return "C";
+                case 30:
+                    return "D";
+                case 31:
+                    return "B";
+                case 32:
+                    return "B";
+                case 333:
+                    return "A";
+                case 34:
+                    return "D";
+                case 35:
+                    return "B";
+                case 36:
+                    return "B";
+                case 37:
+                    return "B";
+                case 38:
+                    return "D";
+                case 39:
+                    return "A";
+                case 40:
+                    return "B";
+                default:
+                    return "";
+            }
+        }
+
+        function getExplanation(questionNumber) {
+            switch (questionNumber) {
+                case 1:
+                    return " Malware, short for malicious software, is any software specifically designed to harm or exploit computer systems.";
+                case 2:
+                    return "The process of converting information into code to prevent unauthorized access.";
+                case 3:
+                    return "The dark web is a part of the internet that is intentionally hidden and can only be accessed with specific software, often associated with illegal activities.";
+                case 4:
+                    return "A DDoS attack involves overwhelming a system, service, or network with a flood of internet traffic, making it temporarily or indefinitely unavailable.";
+                case 5:
+                    return "Deceptive attempts to obtain sensitive information by posing as a trustworthy entity.";
+                case 6:
+                    return "A proxy server serves as an intermediary between a user's device and the internet, enhancing privacy and security by hiding the user's IP address.";
+                case 7:
+                    return "A digital footprint refers to the traces of an individual's online activities, and managing it is important for privacy and security.";
+                case 8:
+                    return "Regular data backups involve creating copies of important information to ensure that data is not lost in the event of a cybersecurity incident.";
+                case 9:
+                    return "Ransomware is a type of malicious software that encrypts files and demands payment in exchange for their release, posing a significant threat to individuals and organizations.";
+                case 10:
+                    return "Ethical hacking involves testing systems for security vulnerabilities with the owner's permission, helping to identify and fix potential weaknesses before malicious hackers can exploit them.";
+                case 11:
+                    return "A zero-day vulnerability is a security flaw in software that is unknown to the software vendor and remains unpatched, making it a concern for cybersecurity.";
+                case 12:
+                    return "Social engineering involves manipulating individuals to disclose sensitive information, such as passwords, through psychological manipulation or deception.";
+                case 13:
+                    return "A penetration tester is hired to assess the security of a system by attempting to exploit vulnerabilities, similar to an ethical hacker.";
+                case 14:
+                    return "Cyber threat intelligence involves gathering and analyzing information about potential cyber threats to inform proactive cybersecurity measures.";
+                case 15:
+                    return "Secure coding practices involve writing code with an emphasis on minimizing security vulnerabilities to enhance the overall security of software.";
+                case 16:
+                    return " A man-in-the-middle attack involves intercepting and potentially altering communication between two parties without their knowledge, compromising the confidentiality and integrity of the communication.";
+                case 17:
+                    return "A security token is a device, either physical or digital, used to generate secure authentication codes to enhance the security of the authentication process.";
+                case 18:
+                    return "Cybersecurity incident response involves the process of managing and mitigating the impact of a cybersecurity incident, including detection, analysis, and recovery.";
+                case 19:
+                    return "Network segmentation involves dividing a network into segments to contain potential security breaches and limit the impact of a compromise.";
+                case 20:
+                    return "Sandboxing involves running untrusted programs in an isolated environment for testing, minimizing the potential impact of malicious code.";
+                 case 21:
+                    return "Biometric authentication uses unique physical or behavioral characteristics for identity verification, offering enhanced security, but potential drawbacks include privacy concerns and the risk of biometric data compromise.";
+                case 22:
+                    return "Blockchain is a decentralized and tamper-resistant ledger technology that ensures the security and transparency of transactions.";
+                case 23:
+                    return "Least privilege involves granting users the minimum level of access required for their tasks, reducing the risk of unauthorized access and potential security breaches.";
+                case 24:
+                    return "A security policy consists of guidelines and rules that help ensure the security of information and systems within an organization.";
+                case 25:
+                    return "Security awareness training involves educating individuals about cybersecurity risks and best practices to enhance their ability to recognize and respond to potential threats.";
+                case 26:
+                    return "A honeypot is a decoy system designed to attract and detect attackers, providing insights into their tactics and techniques to enhance overall security.";
+                case 27:
+                    return "Risk assessment involves evaluating potential security risks and vulnerabilities in an organization, informing decision-making to prioritize and mitigate those risks.";
+                case 28:
+                    return "A security incident log records details of security incidents for analysis and investigation, aiding forensic analysis and improving overall security.";
+                case 29:
+                    return "Supply chain security involves protecting the security of the entire supply chain, from the manufacturing process to product delivery, to prevent potential vulnerabilities.";
+                case 30:
+                    return "A bug bounty program rewards individuals who responsibly disclose security vulnerabilities, encouraging ethical hacking and helping organizations identify and fix potential weaknesses.";
+                case 31:
+                    return " Secure coding practices involve writing code with an emphasis on minimizing security vulnerabilities to enhance the overall security of software";
+                case 32:
+                    return " A man-in-the-middle attack involves intercepting and potentially altering communication between two parties without their knowledge, compromising the confidentiality and integrity of the communication.";
+                case 33:
+                    return "A security token is a device, either physical or digital, used to generate secure authentication codes to enhance the security of the authentication process.";
+                case 34:
+                    return "Cybersecurity incident response involves the process of managing and mitigating the impact of a cybersecurity incident, including detection, analysis, and recovery.";
+                case 35:
+                    return "Ethical hacking involves testing systems for security vulnerabilities with the owner's permission, helping to identify and fix potential weaknesses before malicious hackers can exploit them.";
+                case 36:
+                    return "Biometric authentication uses unique physical or behavioral characteristics for identity verification, offering enhanced security. Drawbacks include privacy concerns and the risk of biometric data compromise.";
+                case 37:
+                    return "Blockchain is a decentralized and tamper-resistant ledger technology that ensures the security and transparency of transactions.";
+                case 38:
+                    return "Least privilege involves granting users the minimum level of access required for their tasks, reducing the risk of unauthorized access and potential security breaches.";
+                case 39:
+                    return "A security policy consists of guidelines and rules that help ensure the security of information and systems within an organization.";
+                case 40:
+                    return "Security awareness training involves educating individuals about cybersecurity risks and best practices to enhance their ability to recognize and respond to potential threats.";
+                default:
+                    return "";
+            }
+        }
+
+        // Initial load of the first question
+        loadNextQuestion();
+    </script>
+
+</body>
+
+</html>

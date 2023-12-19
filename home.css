@@ -1,0 +1,181 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+}
+
+
+.fullscreen-video {
+    position: relative;
+    width: 100%;
+    min-height: 100vh; 
+    overflow: hidden;
+    z-index: 1;
+}
+
+
+.fullscreen-video video {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.centered-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+.welcome-message {
+    font-size: 31px;
+    color: #04ff00;
+    margin-bottom: 10px;
+}
+
+/* Style for the "mission-statement" text */
+.mission-statement {
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Basic styles for the navigation bar */
+.navbar {
+    background-color: transparent;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+}
+
+/* Logo styles */
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Navigation links styles */
+.nav-links ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #e96f6f;
+}
+
+.nav-links a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Style for the second section on top of the video */
+.content-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background: transparent;
+    padding: 0;
+    max-width: 100%;
+    text-align: center; /* Center-align text */
+}
+
+/* Style for the headers */
+h2 {
+    font-size: 25px;
+    margin-bottom: 15px;
+    color: #fffb00;
+}
+
+/* Style for the article text */
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #ffffff;
+    
+}
+
+/* Style for the footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Dancing Script', cursive;
+    border-top: 2px solid #555;
+    font-size: 16px;
+}
+
+/* Style for the copyright text */
+footer p {
+    margin: 0;
+}
+
+/* Style for the "Get Started" button */
+.get-started-button {
+    background-color: #e04747;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+
+}
+
+.get-started-button:hover {
+    background-color: #539adc;
+    color: #fff;
+}

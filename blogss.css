@@ -1,0 +1,127 @@
+/* Reset default margin and padding for consistency */
+body, h1, h2, p, ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0 120px; /* Increase the left and right padding for more gaps */
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.navbar {
+    background-color: #2e3e4e;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    width: 100%;
+    position: fixed; /* Fixed position to cover the entire screen width */
+    top: 0; /* Stick to the top of the screen */
+    left: 0; /* Start from the left edge */
+}
+
+
+.navbar .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 20px; /* Adjust the margin-left value as needed */
+}
+
+.nav-links ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Hover effect for navigation bar links */
+.nav-links a:hover {
+    color: #ff5733;
+    transition: color 0.3s;
+}
+
+/* Main Content Styles */
+h1, h2, p, ul, ol {
+    margin: 0 20px; /* Add margin for left and right gaps */
+}
+
+h1 {
+    font-size: 30px;
+    margin: 20px 0;
+    color: #333;
+}
+
+h2 {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #444;
+}
+
+p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+}
+
+ul, ol {
+    font-size: 18px;
+    margin: 10px 0;
+    padding-left: 30px;
+    color: #555;
+}
+
+footer {
+    background: none; /* Remove background color */
+    color: #171616; /* Text color (change to your preference) */
+    text-align: center;
+    padding: 20px 0; /* Add padding as needed */
+}
+
+footer p {
+    margin: 0;
+}
+
+
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+}
