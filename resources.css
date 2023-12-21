@@ -1,17 +1,16 @@
-/* Reset some default styles */
 body, h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
-/* Set the body font and background color */
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f2f2f2;
     color: #333;
 }
 
-/* Header styles */
+
 .navbar {
     background-color: #2e3e4e;
     color: #fff;
@@ -42,14 +41,13 @@ body {
     color: #fff;
 }
 
-/* Hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733; 
     transition: color 0.3s; 
 }
 
 
-/* Content section styles */
 section {
     background-color: #fff;
     padding: 30px;
@@ -68,7 +66,7 @@ section p {
     line-height: 1.5;
 }
 
-/* Search bar styles */
+
 .search-bar {
     text-align: center;
     margin: 20px 0;
@@ -91,7 +89,7 @@ section p {
     cursor: pointer;
 }
 
-/* Resources section styles */
+
 .resources-section {
     margin-top: 40px;
 }
@@ -129,7 +127,7 @@ section p {
     background-color: #1c2b3b;
 }
 
-/* Footer styles */
+
 footer {
     text-align: center;
     background-color: #2e3e4e;
@@ -137,7 +135,7 @@ footer {
     padding: 10px 0;
 }
 
-/* Media queries for responsiveness */
+
 @media screen and (max-width: 768px) {
     .nav-links ul {
         flex-direction: column;
@@ -157,7 +155,7 @@ footer {
     }
 }
 
-/* Style for the Welcome section */
+
 #welcome-section {
     background-color: #ffffff;
     color: #000000;

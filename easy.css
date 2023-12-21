@@ -1,11 +1,10 @@
-/* Reset some default browser styles */
 body, h1, h2, p {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Set a background color for the whole page */
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-image: url('img/pexels-andreea-ch-1166644.jpg'); 
@@ -17,10 +16,10 @@ body {
     min-height: 100vh;
 }
 
-/* Rest of your existing styles... */
 
 
-/* Style the header section */
+
+
 header {
     background-color: #333;
     color: #fff;
@@ -32,7 +31,7 @@ header h1 {
     font-size: 2em;
 }
 
-/* Style the navigation bar */
+
 .navbar {
     background-color: #2e3e4e;
     color: #fff;
@@ -68,16 +67,16 @@ header h1 {
     transition: color 0.3s;
 }
 
-/* Hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733;
 }
 
-/* Style the About Us section */
+
 .about-us {
     background-color: #fff;
     padding: 20px 0;
-    flex: 1; /* Fill available space */
+    flex: 1; 
 }
 
 .container {
@@ -107,16 +106,16 @@ header h1 {
     margin-bottom: 15px;
 }
 
-/* Style the footer */
+
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    margin-top: auto; /* Push to the bottom */
+    margin-top: auto; 
 }
 
-/* Responsive design for smaller screens */
+
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -140,23 +139,22 @@ footer {
 
 #quiz-container {
     max-width: 600px;
-    margin: auto; /* Center the container horizontally */
+    margin: auto; 
     padding: 20px;
     border-radius: 10px;
-    border: none; /* Remove the border */
+    border: none; 
     position: relative;
     overflow: hidden;
-    display: flex; /* Use flexbox for vertical centering */
-    flex-direction: column; /* Stack child elements vertically */
-    justify-content: center; /* Center child elements vertically */
-    align-items: center; /* Center child elements horizontally */
-    background: none; /* Remove background color */
-    box-shadow: none; /* Remove box shadow */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    background: none; 
+    box-shadow: none; 
 }
 
 
 
-/* Style the individual questions */
 .question {
     margin-bottom: 20px;
     border-bottom: 1px solid #ccc;
@@ -183,7 +181,6 @@ footer {
     margin: 5px 0;
 }
 
-/* Style the answer input */
 .question input[type="text"] {
     width: 100%;
     padding: 8px;
@@ -193,7 +190,7 @@ footer {
     border-radius: 4px;
 }
 
-/* Style the result message */
+
 #result {
     margin-top: 20px;
     font-size: 18px;
@@ -207,7 +204,7 @@ footer {
     color: rgb(180, 4, 4);
 }
 
-/* Style the buttons */
+
 .submit-btn,
 button {
     padding: 10px 15px;
@@ -229,7 +226,7 @@ button:hover,
     background-color: #45a049;
 }
 
-/* Responsive design for smaller screens */
+
 @media (max-width: 768px) {
     #quiz-container {
         padding: 15px;
@@ -241,9 +238,9 @@ button:hover,
 }
 
 h1 {
-    text-align: center; /* Center the heading */
-    color: #333; /* Set the text color */
-    font-family: 'Lobster', cursive; /* Use the Lobster font (from Google Fonts) */
-    font-size: 36px; /* Adjust the font size as needed */
-    margin-bottom: 20px; /* Add some bottom margin for spacing */
+    text-align: center; 
+    color: #333; 
+    font-family: 'Lobster', cursive; 
+    font-size: 36px; 
+    margin-bottom: 20px; 
 }

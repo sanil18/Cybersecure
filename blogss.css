@@ -1,10 +1,9 @@
-/* Reset default margin and padding for consistency */
 body, h1, h2, p, ul, ol {
     margin: 0;
     padding: 0;
 }
 
-/* Global Styles */
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f4f4f4;
@@ -14,10 +13,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: 0 120px; /* Increase the left and right padding for more gaps */
+    padding: 0 120px; 
 }
 
-/* Header Styles */
+
 header {
     background-color: #333;
     color: #fff;
@@ -39,9 +38,9 @@ header h1 {
     padding: 10px 0;
     margin-bottom: 20px;
     width: 100%;
-    position: fixed; /* Fixed position to cover the entire screen width */
-    top: 0; /* Stick to the top of the screen */
-    left: 0; /* Start from the left edge */
+    position: fixed; 
+    top: 0; 
+    left: 0;
 }
 
 
@@ -50,7 +49,7 @@ header h1 {
     font-size: 20px;
     text-decoration: none;
     color: #fff;
-    margin-left: 20px; /* Adjust the margin-left value as needed */
+    margin-left: 20px; 
 }
 
 .nav-links ul {
@@ -67,15 +66,15 @@ header h1 {
     color: #fff;
 }
 
-/* Hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733;
     transition: color 0.3s;
 }
 
-/* Main Content Styles */
+
 h1, h2, p, ul, ol {
-    margin: 0 20px; /* Add margin for left and right gaps */
+    margin: 0 20px; 
 }
 
 h1 {
@@ -104,16 +103,15 @@ ul, ol {
 }
 
 footer {
-    background: none; /* Remove background color */
-    color: #171616; /* Text color (change to your preference) */
+    background: none; 
+    color: #171616; 
     text-align: center;
-    padding: 20px 0; /* Add padding as needed */
+    padding: 20px 0; 
 }
 
 footer p {
     margin: 0;
 }
-
 
 
 a {

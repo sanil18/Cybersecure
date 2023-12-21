@@ -1,10 +1,9 @@
-/* Reset some default styles */
 body, h1, h2, h3, p {
     margin: 0;
     padding: 0;
 }
 
-/* Set a background color for the whole page */
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #e9dbdb;
@@ -13,7 +12,7 @@ body {
     min-height: 100vh;
 }
 
-/* Style the navigation bar */
+
 .navbar {
     background-color: #2e3e4e;
     color: #fff;
@@ -22,7 +21,7 @@ body {
     align-items: center;
     padding: 10px 20px;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif; /* Use 'Montserrat' font for the navbar */
+    font-family: 'Montserrat', sans-serif; 
 }
 
 .navbar .logo {
@@ -46,13 +45,13 @@ body {
     color: #fff;
 }
 
-/* Hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733;
     transition: color 0.3s;
 }
 
-/* Style the main content container */
+
 .container {
     background-color: #fff;
     padding: 20px;
@@ -60,10 +59,8 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Rest of your CSS for other sections... */
 
 
-/* Style the welcome message */
 #quiz-start h1 {
     font-size: 36px;
     color: var(--primary-color);
@@ -76,26 +73,26 @@ body {
     margin-bottom: 30px;
 }
 
-/* Style section headings */
+
 h2 {
     font-size: 28px;
     margin-top: 30px;
     color: var(--primary-color);
 }
 
-/* Style the difficulty level cards */
+
 .card {
     margin-top: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
-    transition: transform 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
-    cursor: pointer; /* Added cursor property for better indication of interactivity */
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer; 
 }
 
 .card:hover {
-    transform: scale(1.05); /* Increased scale on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Added box shadow on hover for elevation effect */
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
 }
 
 .card-title {
@@ -123,7 +120,7 @@ h2 {
 }
 
 
-/* Style the instructions */
+
 ul {
     font-size: 18px;
     list-style: disc;
@@ -131,7 +128,6 @@ ul {
     margin-top: 20px;
 }
 
-/* Style the return to main menu button */
 .btn-secondary {
     background-color: #555;
     color: #fff;
@@ -145,7 +141,7 @@ ul {
     background-color: #333;
 }
 
-/* Header styles */
+
 .navbar {
     background-color: #2e3e4e;
     color: #fff;
@@ -176,13 +172,12 @@ ul {
     color: #fff;
 }
 
-/* Hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733; 
     transition: color 0.3s; 
 }
 
-/* Footer styles */
 footer {
     text-align: center;
     background-color: #2e3e4e;
@@ -191,7 +186,6 @@ footer {
 }
 
 
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -212,12 +206,12 @@ footer {
     }
 }
 
-/* Remove underline from navigation bar links on hover */
+
 .nav-links a:hover {
     text-decoration: none;
 }
 
-/* Variables for colors */
+
 :root {
     --primary-color: #000000;
     --secondary-color: #555;

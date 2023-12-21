@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="easy.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/quiz.png" type="image/png">
     <title>Quiz</title>
 </head>
 
@@ -29,12 +30,11 @@
     <h1>Level 2 Intermediate Quiz</h1>
 
     <div id="quiz-container">
-        <!-- Placeholder for the question content -->
         <div class="question" id="current-question">
-            <!-- Question content will be loaded here dynamically -->
+        
         </div>
 
-        <!-- "Submit" and "Next Question" buttons -->
+      
         <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
         <button onclick="loadNextQuestion()">Next Question</button>
         <button onclick="displayResults()" id="show-results-btn" style="display: none;">Show Results</button>
@@ -51,30 +51,29 @@ function loadNextQuestion() {
     var currentQuestionElement = document.getElementById("current-question");
     var questionContent = getQuestionContent(currentQuestionNumber);
 
-    // Check if the user has submitted the current question before moving to the next one
     if (!isQuestionSubmitted && currentQuestionNumber > 1) {
         alert("Please submit your answer before moving to the next question.");
         return;
     }
 
-    // Reset the submission flag for the next question
+    
     isQuestionSubmitted = false;
 
     if (questionContent) {
         currentQuestionElement.innerHTML = questionContent;
         currentQuestionNumber++;
 
-        // Show the "Submit" button for the new question
+        
         document.querySelector(".submit-btn").style.display = "block";
     } else {
-        // No more questions, display quiz completion message or redirect to results page
+
         currentQuestionElement.innerHTML = "Quiz completed!";
-        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
-        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
-        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
+        document.querySelector("button").style.display = "none"; 
+        document.querySelector(".submit-btn").style.display = "none"; 
+        document.getElementById("show-results-btn").style.display = "block"; 
     }
 
-    // Clear previous result
+
     document.getElementById("result").innerHTML = "";
     document.getElementById("result").className = "";
 }
@@ -88,12 +87,9 @@ function submitAnswer() {
         return;
     }
 
-    // Set the flag to indicate that the current question has been submitted
     isQuestionSubmitted = true;
 
     checkAnswer(currentQuestionNumber);
-
-    // Hide the "Submit" button after submitting the answer
     document.querySelector(".submit-btn").style.display = "none";
 }
 
@@ -132,8 +128,6 @@ function checkAnswer(questionNumber) {
         resultElement.className = "incorrect";
     }
 }
-
-
 
         function getQuestionContent(questionNumber) {
             switch (questionNumber) {
@@ -600,7 +594,7 @@ case 40:
     `;
 
                 default:
-                    return null; // Return null when there are no more questions
+                    return null; 
             }
         }
 
@@ -779,7 +773,7 @@ case 40:
             }
         }
 
-        // Initial load of the first question
+       
         loadNextQuestion();
     </script>
 

@@ -1,11 +1,9 @@
-/* Reset default margin and padding for all elements */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Set a background color for the whole page */
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #ccc9c9;
@@ -14,7 +12,7 @@ body {
     min-height: 100vh;
 }
 
-/* Style the header section */
+
 header {
     background-color: #333;
     color: #fff;
@@ -26,14 +24,14 @@ header h1 {
     font-size: 2em;
 }
 
-/* Style the navigation bar */
+
 .navbar {
     background-color: #2e3e4e;
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 25px; /* Increased the top and bottom padding */
+    padding: 20px 25px; 
     margin-bottom: 20px;
 }
 
@@ -59,12 +57,12 @@ header h1 {
     transition: color 0.3s;
 }
 
-/* Improved hover effect for navigation bar links */
+
 .nav-links a:hover {
     color: #ff5733;
 }
 
-/* Style the blog list */
+
 .blog-list {
     display: flex;
     flex-wrap: wrap;
@@ -83,7 +81,7 @@ header h1 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Improved hover effect for blog items */
+
 .blog:hover {
     transform: translateY(-10px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -95,24 +93,24 @@ header h1 {
     transition: transform 0.3s;
 }
 
-/* Hover effect for blog images */
+
 .blog:hover img {
     transform: scale(1.05);
 }
 
-/* Updated font size for the blog titles */
+
 .blog h1 {
-    font-size: 1rem; /* Adjust the font size to your preference */
+    font-size: 1rem; 
     margin-top: 10px;
 }
 
-/* Remove underline from blog title */
+
 .blog h1 a {
     text-decoration: none;
-    color: #2185f8; /* Set the color for the blog title */
+    color: #2185f8; 
 }
 
-/* Hover effect for blog title */
+
 .blog h1 a:hover {
     color: #ff5733;
     transition: color 0.3s;
@@ -123,7 +121,7 @@ header h1 {
     color: #333;
 }
 
-/* Style the footer */
+
 footer {
     background-color: #333;
     color: #fff;
@@ -131,15 +129,15 @@ footer {
     padding: 10px 0;
 }
 
-/* Add a hover effect for links */
+
 a:hover {
     color: #555;
 }
 
-/* Style the welcome section */
+
 .blog-container .welcome-section {
     text-align: center;
-    padding: 0 80px; /* Add more padding on both left and right sides */
+    padding: 0 80px; 
 }
 
 .blog-container .welcome-section h1 {
@@ -153,7 +151,7 @@ a:hover {
     margin-bottom: 15px;
 }
 
-/* Style the blog heading */
+
 .blog-container .blog-heading {
     text-align: center;
     margin-top: 30px;

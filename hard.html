@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/quiz.png" type="image/png">
     <title>Quiz</title>
 </head>
 <body>
@@ -28,75 +29,77 @@
     <h1>Level 3 Hard Quiz</h1> 
 
     <div id="quiz-container">
-        <div class="question" id="current-question"></div>
+        <div class="question" id="current-question">
+        
+        </div>
+    
+      
         <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
         <button onclick="loadNextQuestion()">Next Question</button>
+        <button onclick="displayResults()" id="show-results-btn" style="display: none;">Show Results</button>
+    
         <div id="result"></div>
     </div>
-
+    
     <script>
-       var currentQuestionNumber = 1;
-var correctAnswers = 0;
-var isQuestionSubmitted = false;
-
-function loadNextQuestion() {
+    var currentQuestionNumber = 1;
+    var correctAnswers = 0;
+    var isQuestionSubmitted = false;
+    
+    function loadNextQuestion() {
     var currentQuestionElement = document.getElementById("current-question");
     var questionContent = getQuestionContent(currentQuestionNumber);
-
-    // Check if the user has submitted the current question before moving to the next one
+    
     if (!isQuestionSubmitted && currentQuestionNumber > 1) {
         alert("Please submit your answer before moving to the next question.");
         return;
     }
-
-    // Reset the submission flag for the next question
+    
+    
     isQuestionSubmitted = false;
-
+    
     if (questionContent) {
         currentQuestionElement.innerHTML = questionContent;
         currentQuestionNumber++;
-
-        // Show the "Submit" button for the new question
+    
+        
         document.querySelector(".submit-btn").style.display = "block";
     } else {
-        // No more questions, display quiz completion message or redirect to results page
+    
         currentQuestionElement.innerHTML = "Quiz completed!";
-        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
-        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
-        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
+        document.querySelector("button").style.display = "none"; 
+        document.querySelector(".submit-btn").style.display = "none"; 
+        document.getElementById("show-results-btn").style.display = "block"; 
     }
-
-    // Clear previous result
+    
+    
     document.getElementById("result").innerHTML = "";
     document.getElementById("result").className = "";
-}
-
-function submitAnswer() {
+    }
+    
+    function submitAnswer() {
     var currentQuestionNumber = getCurrentQuestionNumber();
     var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
-
+    
     if (userAnswer === "") {
         alert("Please enter your answer before submitting.");
         return;
     }
-
-    // Set the flag to indicate that the current question has been submitted
+    
     isQuestionSubmitted = true;
-
+    
     checkAnswer(currentQuestionNumber);
-
-    // Hide the "Submit" button after submitting the answer
     document.querySelector(".submit-btn").style.display = "none";
-}
-
-function getCurrentQuestionNumber() {
+    }
+    
+    function getCurrentQuestionNumber() {
     return currentQuestionNumber - 1;
-}
-
-function displayResults() {
+    }
+    
+    function displayResults() {
     var totalQuestions = currentQuestionNumber - 1;
     var feedback = "";
-
+    
     if (correctAnswers === totalQuestions) {
         feedback = "Congratulations! You answered all questions correctly.";
     } else if (correctAnswers >= totalQuestions / 2) {
@@ -104,17 +107,17 @@ function displayResults() {
     } else {
         feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
     }
-
+    
     document.getElementById("result").innerHTML = feedback;
     document.getElementById("result").className = "quiz-completed";
-}
-
-function checkAnswer(questionNumber) {
+    }
+    
+    function checkAnswer(questionNumber) {
     var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
     var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
     var resultElement = document.getElementById("result");
     var explanation = getExplanation(questionNumber);
-
+    
     if (userAnswer === correctAnswer) {
         resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
         resultElement.className = "correct";
@@ -123,7 +126,8 @@ function checkAnswer(questionNumber) {
         resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
         resultElement.className = "incorrect";
     }
-}
+    }
+    
 
         function getQuestionContent(questionNumber) {
             switch (questionNumber) {
@@ -237,7 +241,7 @@ case 11:
             </ul>
             <input type="text" id="answer${questionNumber}">`;
 
-            // Additional questions
+          
 
 case 12:
     return `<strong>${questionNumber}: What is the concept of "zero-day vulnerabilities" in cybersecurity, and why are they considered a significant threat?</strong>
@@ -534,22 +538,7 @@ case 40:
 
 
             default:
-                    return null; // Return null when there are no more questions
-            }
-        }
-
-        function checkAnswer(questionNumber) {
-            var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
-            var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
-            var resultElement = document.getElementById("result");
-            var explanation = getExplanation(questionNumber);
-
-            if (userAnswer === correctAnswer) {
-                resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
-                resultElement.className = "correct";
-            } else {
-                resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
-                resultElement.className = "incorrect";
+                    return null; 
             }
         }
 
@@ -730,7 +719,7 @@ case 40:
             }
         }
 
-        loadNextQuestion(); // Initial load of the first question
+        loadNextQuestion(); 
     </script>
 
 </body>

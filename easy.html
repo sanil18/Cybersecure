@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="easy.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/quiz.png" type="image/png">
     <title>Quiz</title>
 </head>
 <body>
@@ -28,14 +29,14 @@
 <h1>Level 1 Basic Quiz</h1> 
 
 <div id="quiz-container">
-    <!-- Placeholder for the question content -->
     <div class="question" id="current-question">
-        <!-- Question content will be loaded here dynamically -->
+    
     </div>
 
-    <!-- "Submit" and "Next Question" buttons -->
+  
     <button class="submit-btn" onclick="submitAnswer()">Submit</button> <br>
     <button onclick="loadNextQuestion()">Next Question</button>
+    <button onclick="displayResults()" id="show-results-btn" style="display: none;">Show Results</button>
 
     <div id="result"></div>
 </div>
@@ -46,89 +47,85 @@ var correctAnswers = 0;
 var isQuestionSubmitted = false;
 
 function loadNextQuestion() {
-    var currentQuestionElement = document.getElementById("current-question");
-    var questionContent = getQuestionContent(currentQuestionNumber);
+var currentQuestionElement = document.getElementById("current-question");
+var questionContent = getQuestionContent(currentQuestionNumber);
 
-    // Check if the user has submitted the current question before moving to the next one
-    if (!isQuestionSubmitted && currentQuestionNumber > 1) {
-        alert("Please submit your answer before moving to the next question.");
-        return;
-    }
+if (!isQuestionSubmitted && currentQuestionNumber > 1) {
+    alert("Please submit your answer before moving to the next question.");
+    return;
+}
 
-    // Reset the submission flag for the next question
-    isQuestionSubmitted = false;
 
-    if (questionContent) {
-        currentQuestionElement.innerHTML = questionContent;
-        currentQuestionNumber++;
+isQuestionSubmitted = false;
 
-        // Show the "Submit" button for the new question
-        document.querySelector(".submit-btn").style.display = "block";
-    } else {
-        // No more questions, display quiz completion message or redirect to results page
-        currentQuestionElement.innerHTML = "Quiz completed!";
-        document.querySelector("button").style.display = "none"; // Hide the "Next Question" button
-        document.querySelector(".submit-btn").style.display = "none"; // Hide the "Submit" button
-        document.getElementById("show-results-btn").style.display = "block"; // Show the "Show Results" button
-    }
+if (questionContent) {
+    currentQuestionElement.innerHTML = questionContent;
+    currentQuestionNumber++;
 
-    // Clear previous result
-    document.getElementById("result").innerHTML = "";
-    document.getElementById("result").className = "";
+    
+    document.querySelector(".submit-btn").style.display = "block";
+} else {
+
+    currentQuestionElement.innerHTML = "Quiz completed!";
+    document.querySelector("button").style.display = "none"; 
+    document.querySelector(".submit-btn").style.display = "none"; 
+    document.getElementById("show-results-btn").style.display = "block"; 
+}
+
+
+document.getElementById("result").innerHTML = "";
+document.getElementById("result").className = "";
 }
 
 function submitAnswer() {
-    var currentQuestionNumber = getCurrentQuestionNumber();
-    var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
+var currentQuestionNumber = getCurrentQuestionNumber();
+var userAnswer = document.getElementById("answer" + currentQuestionNumber).value.trim().toLowerCase();
 
-    if (userAnswer === "") {
-        alert("Please enter your answer before submitting.");
-        return;
-    }
+if (userAnswer === "") {
+    alert("Please enter your answer before submitting.");
+    return;
+}
 
-    // Set the flag to indicate that the current question has been submitted
-    isQuestionSubmitted = true;
+isQuestionSubmitted = true;
 
-    checkAnswer(currentQuestionNumber);
-
-    // Hide the "Submit" button after submitting the answer
-    document.querySelector(".submit-btn").style.display = "none";
+checkAnswer(currentQuestionNumber);
+document.querySelector(".submit-btn").style.display = "none";
 }
 
 function getCurrentQuestionNumber() {
-    return currentQuestionNumber - 1;
+return currentQuestionNumber - 1;
 }
 
 function displayResults() {
-    var totalQuestions = currentQuestionNumber - 1;
-    var feedback = "";
+var totalQuestions = currentQuestionNumber - 1;
+var feedback = "";
 
-    if (correctAnswers === totalQuestions) {
-        feedback = "Congratulations! You answered all questions correctly.";
-    } else if (correctAnswers >= totalQuestions / 2) {
-        feedback = "Good job! You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
-    } else {
-        feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
-    }
+if (correctAnswers === totalQuestions) {
+    feedback = "Congratulations! You answered all questions correctly.";
+} else if (correctAnswers >= totalQuestions / 2) {
+    feedback = "Good job! You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+} else {
+    feedback = "You can do better. You answered " + correctAnswers + " out of " + totalQuestions + " questions correctly.";
+}
 
-    document.getElementById("result").innerHTML = feedback;
-    document.getElementById("result").className = "quiz-completed";
+document.getElementById("result").innerHTML = feedback;
+document.getElementById("result").className = "quiz-completed";
 }
 
 function checkAnswer(questionNumber) {
-    var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
-    var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
-    var resultElement = document.getElementById("result");
-    var explanation = getExplanation(questionNumber);
+var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
+var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
+var resultElement = document.getElementById("result");
+var explanation = getExplanation(questionNumber);
 
-    if (userAnswer === correctAnswer) {
-        resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
-        resultElement.className = "correct";
-        correctAnswers++;
-    } else {
-        resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
-        resultElement.className = "incorrect";
-    }
+if (userAnswer === correctAnswer) {
+    resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
+    resultElement.className = "correct";
+    correctAnswers++;
+} else {
+    resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
+    resultElement.className = "incorrect";
+}
 }
 
     function getQuestionContent(questionNumber) {
@@ -245,7 +242,7 @@ function checkAnswer(questionNumber) {
                 `;
 
                 
-// Question 11
+
 case 11:
     return `
         <strong>11: What should you do if a website asks for your social security number to access free content?</strong>
@@ -258,7 +255,7 @@ case 11:
         <input type="text" id="answer11">
     `;
 
-// Question 12
+
 case 12:
     return `
         <strong>12: Which of the following is a strong password?</strong>
@@ -271,7 +268,7 @@ case 12:
         <input type="text" id="answer12">
     `;
 
-// Question 13
+
 case 13:
     return `
         <strong>13: What does "phishing" refer to in the context of the internet?</strong>
@@ -284,7 +281,7 @@ case 13:
         <input type="text" id="answer13">
     `;
 
-// Question 14
+
 case 14:
     return `
         <strong>14: Why is it important to log out of your accounts when using a shared computer?</strong>
@@ -297,7 +294,7 @@ case 14:
         <input type="text" id="answer14">
     `;
 
-// Question 15
+
 case 15:
     return `
         <strong>15: What should you do if you accidentally click on a suspicious link?</strong>
@@ -310,7 +307,7 @@ case 15:
         <input type="text" id="answer15">
     `;
 
-// Question 16
+
 case 16:
     return `
         <strong>16: Which of the following is a safe way to update your software?</strong>
@@ -323,7 +320,6 @@ case 16:
         <input type="text" id="answer16">
     `;
 
-// Question 17
 case 17:
     return `
         <strong>17: What is two-factor authentication (2FA) used for?</strong>
@@ -336,7 +332,7 @@ case 17:
         <input type="text" id="answer17">
     `;
 
-// Question 18
+
 case 18:
     return `
         <strong>18: Why is it important to be cautious when sharing location information online?</strong>
@@ -349,7 +345,7 @@ case 18:
         <input type="text" id="answer18">
     `;
 
-// Question 19
+
 case 19:
     return `
         <strong>19: What does "cyberbullying" involve?</strong>
@@ -362,7 +358,7 @@ case 19:
         <input type="text" id="answer19">
     `;
 
-// Question 20
+
 case 20:
     return `
         <strong>20: What is the purpose of a firewall on a computer?</strong>
@@ -387,7 +383,7 @@ case 21:
         <input type="text" id="answer21">
     `;
 
-// Question 2
+
 case 22:
     return `
         <strong>22: What does the term "phishing" refer to in the context of internet security?</strong>
@@ -400,7 +396,7 @@ case 22:
         <input type="text" id="answer22">
     `;
 
-// Question 3
+
 case 23:
     return `
         <strong>23: Why is it important to keep your software and operating system up-to-date?</strong>
@@ -413,7 +409,6 @@ case 23:
         <input type="text" id="answer23">
     `;
 
-// Question 4
 case 24:
     return `
         <strong>24: What is the purpose of the "delete cookies" option in a web browser?</strong>
@@ -426,7 +421,7 @@ case 24:
         <input type="text" id="answer24">
     `;
 
-// Question 5
+
 case 25:
     return `
         <strong>25: How can you verify if a website is secure before entering personal information?</strong>
@@ -439,7 +434,7 @@ case 25:
         <input type="text" id="answer25">
     `;
 
-// Question 6
+
 case 26:
     return `
         <strong>26: What is the primary purpose of a web browser?</strong>
@@ -452,7 +447,7 @@ case 26:
         <input type="text" id="answer26">
     `;
 
-// Question 7
+
 case 27:
     return `
         <strong>27: Why is it essential to create backups of important files on your computer?</strong>
@@ -465,7 +460,7 @@ case 27:
         <input type="text" id="answer27">
     `;
 
-// Question 8
+
 case 28:
     return `
         <strong>28: What is the purpose of a CAPTCHA on websites?</strong>
@@ -478,7 +473,7 @@ case 28:
         <input type="text" id="answer28">
     `;
 
-// Question 9
+
 case 29:
     return `
         <strong>29: What is the role of an IP address in computer networking?</strong>
@@ -491,7 +486,7 @@ case 29:
         <input type="text" id="answer29">
     `;
 
-// Question 10
+
 case 30:
     return `
         <strong>30: What does the term "URL" stand for in the context of web addresses?</strong>
@@ -504,7 +499,7 @@ case 30:
         <input type="text" id="answer30">
     `;
 
-// Question 11
+
 case 31:
     return `
         <strong>31: What is the significance of a website URL starting with "https"?</strong>
@@ -517,7 +512,7 @@ case 31:
         <input type="text" id="answer31">
     `;
 
-// Question 12
+
 case 32:
     return `
         <strong>32: What should you do if a pop-up appears on a website you don’t know?</strong>
@@ -530,7 +525,7 @@ case 32:
         <input type="text" id="answer32">
     `;
 
-// Question 13
+
 case 33:
     return `
         <strong>33: What is the purpose of a "download" button on a website?</strong>
@@ -543,7 +538,7 @@ case 33:
         <input type="text" id="answer33">
     `;
 
-// Question 14
+
 case 34:
     return `
         <strong>34: What is the significance of a website URL starting with "http"?</strong>
@@ -556,7 +551,7 @@ case 34:
         <input type="text" id="answer34">
     `;
 
-// Question 15
+
 case 35:
     return `
         <strong>35: What is the primary purpose of a firewall in computer security?</strong>
@@ -569,7 +564,7 @@ case 35:
         <input type="text" id="answer35">
     `;
 
-// Question 16
+
 case 36:
     return `
         <strong>36: Why is it important to be cautious when sharing location information online?</strong>
@@ -582,7 +577,7 @@ case 36:
         <input type="text" id="answer36">
     `;
 
-// Question 17
+
 case 37:
     return `
         <strong>37: What does the term "cyberbullying" involve?</strong>
@@ -595,7 +590,7 @@ case 37:
         <input type="text" id="answer37">
     `;
 
-// Question 18
+
 case 38:
     return `
         <strong>38: What is the purpose of a "strong password" in online security?</strong>
@@ -608,7 +603,6 @@ case 38:
         <input type="text" id="answer38">
     `;
 
-// Question 19
 case 39:
     return `
         <strong>39: What should you do if you accidentally click on a suspicious link?</strong>
@@ -621,7 +615,7 @@ case 39:
         <input type="text" id="answer39">
     `;
 
-// Question 20
+
 case 40:
     return `
         <strong>40: What is two-factor authentication (2FA) used for?</strong>
@@ -636,25 +630,10 @@ case 40:
 
 
             default:
-                return null; // Return null when there are no more questions
+                return null; 
         }
     }
 
-    function checkAnswer(questionNumber) {
-        var userAnswer = document.getElementById("answer" + questionNumber).value.trim().toLowerCase();
-        var correctAnswer = getCorrectAnswer(questionNumber).trim().toLowerCase();
-        var resultElement = document.getElementById("result");
-        var explanation = getExplanation(questionNumber);
-
-        if (userAnswer === correctAnswer) {
-            resultElement.innerHTML = "Correct! Well done.<br>" + explanation;
-            resultElement.className = "correct";
-        } else {
-            resultElement.innerHTML = "Incorrect. The correct answer is: " + getCorrectAnswer(questionNumber) + "<br>" + explanation;
-            resultElement.className = "incorrect";
-        }
-      
-    }
     
 
     function getCorrectAnswer(questionNumber) {
@@ -832,7 +811,6 @@ case 40:
         }
     }
 
-    // Initial load of the first question
     loadNextQuestion();
 
     
