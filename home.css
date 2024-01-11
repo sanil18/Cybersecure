@@ -44,7 +44,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Style for the "mission-statement" text */
 .mission-statement {
     font-size: 18px;
     color: #fff;
@@ -52,7 +51,7 @@ body {
     white-space: nowrap; /* Prevent line breaks */
 }
 
-/* Basic styles for the navigation bar */
+
 .navbar {
     background-color: transparent;
     padding: 20px;
@@ -66,7 +65,7 @@ body {
     z-index: 3;
 }
 
-/* Logo styles */
+
 .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 18px;
@@ -74,7 +73,7 @@ body {
     text-decoration: none;
 }
 
-/* Navigation links styles */
+
 .nav-links ul {
     list-style-type: none;
     margin: 0;
@@ -116,7 +115,7 @@ body {
     transform-origin: left;
 }
 
-/* Style for the second section on top of the video */
+
 .content-container {
     position: absolute;
     top: 50%;
@@ -126,17 +125,17 @@ body {
     background: transparent;
     padding: 0;
     max-width: 100%;
-    text-align: center; /* Center-align text */
+    text-align: center; 
 }
 
-/* Style for the headers */
+
 h2 {
     font-size: 25px;
     margin-bottom: 15px;
     color: #fffb00;
 }
 
-/* Style for the article text */
+
 p {
     font-size: 16px;
     line-height: 1.6;
@@ -144,7 +143,7 @@ p {
     
 }
 
-/* Style for the footer */
+
 footer {
     background-color: #333;
     color: #fff;
@@ -155,12 +154,12 @@ footer {
     font-size: 16px;
 }
 
-/* Style for the copyright text */
+
 footer p {
     margin: 0;
 }
 
-/* Style for the "Get Started" button */
+
 .get-started-button {
     background-color: #e04747;
     color: #fff;
